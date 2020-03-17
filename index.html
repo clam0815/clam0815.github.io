@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Vokabulator</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="images/hello-icon-152.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="white"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Hello World">
+  <meta name="msapplication-TileImage" content="images/icon-144.png">
+  <meta name="msapplication-TileColor" content="#FFFFFF">
+</head>
+<body class="fullscreen">
+  <div id="app">
+	  <div class="header">
+		<a v-on:click="showStart">Vokabulator</a>
+		<span v-if="sammlung != null"> - {{ sammlung.Name }}</span>		
+	  </div>
+	  
+	  <div class="main">
+
+		  <div id="start" class="container" v-if="page === PAGES.START">
+			<div v-if="sammlungen.length > 0" style="margin-bottom: 10px;">Sammlungen</div>
+			
+			<button class="btn btn-primary" v-for="sammlung in sammlungen" v-on:click="loadVokabeln(sammlung)">
+				{{ sammlung.Name }}
+			</button>
+			
+			<button class="btn btn-success" style="margin-top: 20px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
+		  </div>
+		  
+		  <div id="anlegen" class="container" v-if="page === PAGES.ANLEGEN">
+			Name<br />
+			<input type="text" class="form-control" v-model="name" /><br />
+			Sprache<br />
+			<select class="form-control" v-model="sprache">
+				<option>Französisch</option>
+				<option>Englisch</option>
+			</select><br />
+			<button class="btn btn-primary" v-on:click="create">Speichern</button>
+			<button class="btn btn-secondary" v-on:click="showStart">Abbrechen</button>
+		  </div>
+		  
+		  <div id="operationen" class="container" v-if="page === PAGES.OPERATIONEN">
+			<button class="btn btn-success" v-on:click="showEingeben">Vokabeln eingeben</button>
+			<button class="btn btn-success" v-on:click="showImportieren">Vokabeln importieren</button>
+			<button class="btn btn-secondary" v-on:click="showBearbeiten">Vokabeln bearbeiten</button>
+			<button class="btn btn-primary"  v-on:click="showLernenOperationen">Vokabeln lernen</button>
+		  </div>
+		  
+		  <div id="eingeben" class="container" v-if="page === PAGES.EINGEBEN">
+			Deutsch<br />
+			<textarea id="textareaDeutsch" class="form-control" v-model="deutsch"></textarea><br />
+			{{ sammlung.Sprache }}<br />
+			<textarea class="form-control" v-model="uebersetzung"></textarea><br />
+			<button class="btn btn-primary" v-on:click="add">Speichern</button>
+			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
+		  </div>
+		  
+		  <div id="importieren" class="container" v-if="page === PAGES.IMPORTIEREN">
+		    <input type='file' accept='text/plain' v-on:change='openFile(event)'><br><br />
+			<!--<textarea v-model="importInput" class="form-control" style="height: 500px; margin-bottom: 20px;"></textarea>-->
+			<button class="btn btn-primary" :disabled="importInput.length == 0" v-on:click="importFromText">Importieren</button>
+			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
+		  </div>
+		  
+		  <div id="bearbeiten" class="container" v-if="page === PAGES.BEARBEITEN">
+			<table>
+				<tr v-for="vokabel in vokabeln">
+					<td>
+						<textarea class="form-control" v-model="vokabel.Deutsch"></textarea>
+					</td>
+					<td>
+						<textarea class="form-control" v-model="vokabel.Uebersetzung"></textarea>
+					</td>
+				</tr>
+			</table>
+			<div style="float: right">
+				<button class="btn btn-secondary" v-on:click="cancelUpdate">Abbrechen</button>
+				<button class="btn btn-primary" v-on:click="update">Speichern</button>
+			</div>
+			
+			<a class="btn btn-secondary" download="vokabeln.txt" v-bind:href="exportURL">Exportieren</a>
+		  </div>
+		  
+		   <div id="lernenOperationen" class="container" v-if="page === PAGES.LERNENOPERATIONEN">
+				<button class="btn btn-primary" v-on:click="showLernen(1)">Deutsch - {{ sammlung.Sprache }}</button>
+				<button class="btn btn-primary" v-on:click="showLernen(2)">{{ sammlung.Sprache }} - Deutsch</button>
+				<button class="btn btn-secondary"  v-on:click="showOperationen">zurück</button>
+		   </div>
+		   
+		   <div id="lernen" class="container" v-if="page === PAGES.LERNEN">
+				<div style="margin: 20px; font-size: 90%; text-align: center">
+					Richtige Antworten: {{ testCorrect.length + testCorrectFinal.length }} &nbsp;&nbsp; Falsche Antworten: {{ testIncorrect.length }}
+				</div>
+				
+				<span v-if="testTyp === 1">				
+					Deutsch
+				</span>
+				<span v-if="testTyp === 2">				
+					{{ sammlung.Sprache }}
+				</span>
+				<br /> 
+				<textarea disabled="Disabled" class="form-control disabled" v-model="frage"></textarea><br />
+				
+				<div v-if="lernenInfo.length == 0">
+					<span v-if="testTyp === 1">				
+						{{ sammlung.Sprache }}
+					</span>
+					<span v-if="testTyp === 2">				
+						Deutsch
+					</span>
+					
+					<br />
+					<textarea id="textareaAntwort" class="form-control" v-model="antwort" style="margin-bottom: 15px"></textarea>
+										
+					<button class="btn btn-small btn-secondary" v-for="c in specialCharacters" v-on:click="app.addCharacter(c)"> {{c}} </button>
+				</div>
+
+				<div v-bind:style="'min-height: 132px;' + (lernenInfo.indexOf('richtig') === 0 ? 'color: #0f0' : 'color: #f00;')" v-if="lernenInfo.length > 0">
+					{{ lernenInfo }}
+				</div>
+				
+				<div style="margin-top: 20px">			
+					<div style="float: right">
+						<button class="btn btn-secondary" v-on:click="showLernenOperationen">Abbrechen</button>
+					</div>
+					<button v-if="lernenInfo.length == 0" class="btn btn-primary" v-on:click="pruefen">Prüfen</button>
+					<button v-if="lernenInfo.length != 0" class="btn btn-primary" v-on:click="nextTest">Weiter</button>
+				</div>
+		   </div>
+		   
+		   <table style="display: none">
+				<tr>
+					<td style="vertical-align: top">
+						All<br />
+						<div v-for="testitem in testAll">
+							{{ testitem.Vokabel.Deutsch }}
+						</div>
+					</td>
+					<td style="vertical-align: top">
+						Correct<br />
+						<div v-for="testitem in testCorrect">
+							{{ testitem.Vokabel.Deutsch }}
+						</div>
+					</td>
+					<td style="vertical-align: top">
+						Incorrect<br />
+						<div v-for="testitem in testIncorrect">
+							{{ testitem.Vokabel.Deutsch }}
+						</div>
+					</td>
+					<td style="vertical-align: top">
+						FinallyCorrect<br />
+						<div v-for="testitem in testCorrectFinal">
+							{{ testitem.Vokabel.Deutsch }}
+						</div>
+					</td>
+				</tr>
+			</table>
+		   
+	  </div>
+	  
+	  <div class="footer">
+		Sammlungen: {{ sammlungen.length }} &nbsp;&nbsp; Vokabeln: {{ vokabeln.length }}
+	  </div>
+  </div>
+  
+  <script src="js/jquery-3.3.1.slim.min.js"></script>
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/vue2_6_11.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
