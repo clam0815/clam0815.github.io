@@ -72,3 +72,39 @@ a, a:hover, a:visited, a:active, a:link {
 #lernen .btn-small {
 	padding: 2px; margin-right: 5px;
 }
+
+.lernenButtons {
+	margin-top: 20px;
+}
+
+.lernenStatistik {
+	margin: 20px;
+	font-size: 90%;
+	text-align: center;
+}
+
+.lernenInfo {
+	min-height: 132px;
+}
+
+@media (max-height: 650px) { 
+	#textareaAntwort, #textareaFrage {
+		height: 25px;
+		line-height: 12px;
+	}
+	
+	.lernenStatistik {
+		position: absolute;
+		bottom: 20px;
+		left: 0;
+		right: 0;
+	}
+	
+	.lernenButtons .btn {
+		padding: .25rem .5rem;
+	}
+	
+	.lernenInfo {
+		min-height: 94px;
+	}
+}

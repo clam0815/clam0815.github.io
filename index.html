@@ -96,7 +96,7 @@
 		   </div>
 		   
 		   <div id="lernen" class="container" v-if="page === PAGES.LERNEN">
-				<div style="margin: 20px; font-size: 90%; text-align: center">
+				<div class="lernenStatistik">
 					Richtige Antworten: {{ testCorrect.length + testCorrectFinal.length }} &nbsp;&nbsp; Falsche Antworten: {{ testIncorrect.length }}
 				</div>
 				
@@ -107,7 +107,7 @@
 					{{ sammlung.Sprache }}
 				</span>
 				<br /> 
-				<textarea disabled="Disabled" class="form-control disabled" v-model="frage"></textarea><br />
+				<textarea id="textareaFrage" disabled="Disabled" class="form-control disabled" v-model="frage"></textarea><br />
 				
 				<div v-if="lernenInfo.length == 0">
 					<span v-if="testTyp === 1">				
@@ -123,11 +123,11 @@
 					<button class="btn btn-small btn-secondary" v-for="c in specialCharacters" v-on:click="app.addCharacter(c)"> {{c}} </button>
 				</div>
 
-				<div v-bind:style="'min-height: 132px;' + (lernenInfo.indexOf('richtig') === 0 ? 'color: #0f0' : 'color: #f00;')" v-if="lernenInfo.length > 0">
+				<div class="lernenInfo" v-bind:style="(lernenInfo.indexOf('richtig') === 0 ? 'color: #0f0' : 'color: #f00;')" v-if="lernenInfo.length > 0">
 					{{ lernenInfo }}
 				</div>
 				
-				<div style="margin-top: 20px">			
+				<div class="lernenButtons">			
 					<div style="float: right">
 						<button class="btn btn-secondary" v-on:click="showLernenOperationen">Abbrechen</button>
 					</div>
