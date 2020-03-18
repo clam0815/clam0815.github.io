@@ -95,7 +95,7 @@ a, a:hover, a:visited, a:active, a:link {
 	
 	.lernenStatistik {
 		position: fixed;
-		bottom: 20px;
+		bottom: 15px;
 		left: 0;
 		right: 0;
 	}
@@ -114,5 +114,6 @@ a, a:hover, a:visited, a:active, a:link {
 		
 	.header {
 		padding: 0px;
+		margin-bottom: 10px;
 	}
 }
