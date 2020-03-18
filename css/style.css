@@ -21,7 +21,7 @@ body {
 }
 
 .main {
-	margin-bottom: 50px;
+	margin-bottom: 90px;
 }
 
 .footer {
@@ -94,17 +94,25 @@ a, a:hover, a:visited, a:active, a:link {
 	}
 	
 	.lernenStatistik {
-		position: absolute;
+		position: fixed;
 		bottom: 20px;
 		left: 0;
 		right: 0;
 	}
 	
-	.lernenButtons .btn {
+	.btn {
 		padding: .25rem .5rem;
 	}
 	
 	.lernenInfo {
 		min-height: 94px;
+	}
+	
+	body {
+		font-size: 12px;
+	}
+		
+	.header {
+		padding: 0px;
 	}
 }
