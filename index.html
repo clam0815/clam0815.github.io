@@ -33,6 +33,12 @@
 			</button>
 			
 			<button class="btn btn-success" style="margin-top: 20px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
+			<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showInfo">Info</button>
+		  </div>
+		  
+		  <div class="container" v-if="page === PAGES.INFO">
+			<p>Vokabulator ist ein privates Spaßprojekt von <a class="link" href="mailto:bending_bender@gmx.net">Christian Lambert</a>. Bei Fragen oder Anregungen könnt ihr mir gerne schreiben.</p>
+			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showStart">zurück</button>
 		  </div>
 		  
 		  <div id="anlegen" class="container" v-if="page === PAGES.ANLEGEN">
@@ -56,10 +62,10 @@
 		  
 		  <div id="eingeben" class="container" v-if="page === PAGES.EINGEBEN">
 			Deutsch<br />
-			<textarea id="textareaDeutsch" class="form-control" v-model="deutsch"></textarea><br />
+			<textarea id="textareaDeutsch" @keydown.enter.exact.prevent @keyup.enter.exact="$('#textareaUebersetzung').focus();" class="form-control" v-model="deutsch"></textarea><br />
 			{{ sammlung.Sprache }}<br />
-			<textarea class="form-control" v-model="uebersetzung"></textarea><br />
-			<button class="btn btn-primary" v-on:click="add">Speichern</button>
+			<textarea id="textareaUebersetzung" @keydown.enter.exact.prevent @keyup.enter.exact="$('#buttonSpeichern').focus();" class="form-control" v-model="uebersetzung"></textarea><br />
+			<button id="buttonSpeichern" class="btn btn-primary" @keydown.enter.exact.prevent @keyup.enter.exact="add" v-on:click="add">Speichern</button>
 			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
 		  </div>
 		  

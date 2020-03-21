@@ -51,6 +51,7 @@ const SOURCES = {
 
 const PAGES = {
 	START: "start",
+	INFO: "info",
 	ANLEGEN: "anlegen",
 	OPERATIONEN: "operationen",
 	EINGEBEN: "eingeben",
@@ -113,8 +114,12 @@ let app = new Vue({
       this.page = PAGES.START
     },
 	
+	showInfo: function() {
+      this.page = PAGES.INFO
+    },
+	
 	showAnlegen: function() {
-      this.page = PAGES.ANLEGEN
+	  this.page = PAGES.ANLEGEN
     },
 	
 	showOperationen: function() {
@@ -152,6 +157,8 @@ let app = new Vue({
 		s.Sprache = this.sprache;
 		this.sammlungen.push(s);
 		this.saveSammlungen();
+		this.name = "";
+	    this.sprache = "";
 		this.showStart();
 	},
 	
@@ -163,7 +170,11 @@ let app = new Vue({
 		this.saveVokabeln();
 		this.deutsch = "";
 		this.uebersetzung = "";
-		$('#textareaDeutsch').focus();
+		
+		Vue.nextTick(function () {
+		  // DOM updated
+		  $('#textareaDeutsch').focus();
+		})		
 	},
 	
 	openFile: function(event) {
