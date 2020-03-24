@@ -32,7 +32,7 @@
 				{{ sammlung.Name }}
 			</button>
 			
-			<button class="btn btn-success" style="margin-top: 20px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
+			<button class="btn btn-success" style="margin-top: 30px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
 			<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showInfo">Info</button>
 		  </div>
 		  
@@ -56,8 +56,9 @@
 		  <div id="operationen" class="container" v-if="page === PAGES.OPERATIONEN">
 			<button class="btn btn-success" v-on:click="showEingeben">Vokabeln eingeben</button>
 			<button class="btn btn-success" v-on:click="showImportieren">Vokabeln importieren</button>
-			<button class="btn btn-secondary" v-on:click="showBearbeiten">Vokabeln bearbeiten</button>
-			<button class="btn btn-primary"  v-on:click="showLernenOperationen">Vokabeln lernen</button>
+			<button class="btn btn-secondary d-none d-sm-block" v-on:click="showBearbeiten">Vokabeln bearbeiten</button>
+			<button class="btn btn-danger" v-on:click="showLoeschen">Sammlung löschen</button>
+			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showLernenOperationen">Vokabeln lernen</button>
 		  </div>
 		  
 		  <div id="eingeben" class="container" v-if="page === PAGES.EINGEBEN">
@@ -71,7 +72,6 @@
 		  
 		  <div id="importieren" class="container" v-if="page === PAGES.IMPORTIEREN">
 		    <input type='file' accept='text/plain' v-on:change='openFile(event)'><br><br />
-			<!--<textarea v-model="importInput" class="form-control" style="height: 500px; margin-bottom: 20px;"></textarea>-->
 			<button class="btn btn-primary" :disabled="importInput.length == 0" v-on:click="importFromText">Importieren</button>
 			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
 		  </div>
@@ -84,6 +84,9 @@
 					</td>
 					<td>
 						<textarea class="form-control" v-model="vokabel.Uebersetzung"></textarea>
+					</td>
+					<td>
+						<button class="btn btn-danger" style="margin-left: 5px" v-on:click="deleteVokabel(vokabel)">Löschen</button>
 					</td>
 				</tr>
 			</table>

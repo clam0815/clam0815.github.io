@@ -150,6 +150,20 @@ let app = new Vue({
 	  this.nextTest();
     },
 	
+	showLoeschen: function() {
+		if (confirm("Sammlung wirklich löschen?"))
+		{
+			const index = this.sammlungen.indexOf(this.sammlung);
+			if (index > -1) {
+				this.sammlungen.splice(index, 1);
+				this.sammlung = null;
+				this.saveSammlungen();
+				window.localStorage.removeItem('vokabeln' + this.sammlung.ID);
+				this.showStart();
+			}
+		}
+	},
+	
 	create: function() {
 		let s = new Sammlung();
 		s.ID = generateUUID();
@@ -199,6 +213,16 @@ let app = new Vue({
 		this.saveVokabeln();
 		this.showOperationen();
 	},
+	
+	deleteVokabel: function(vokabel) {
+		if (confirm("Vokabel wirklich löschen?"))
+		{
+			const index = this.vokabeln.indexOf(vokabel);
+			if (index > -1) {
+				this.vokabeln.splice(index, 1);
+			}
+		}
+	},	
 	
 	update: function() {
 		this.saveVokabeln();
