@@ -354,9 +354,9 @@ let app = new Vue({
 		} else {
 			if (this.testTyp === 1)
 			{
-				this.lernenInfo = "korrekte Antwort: " + this.selectedTestItem.Vokabel.Uebersetzung;
+				this.lernenInfo = "korrekte Antwort: <span class='correct'>" + this.selectedTestItem.Vokabel.Uebersetzung + "</span>";
 			} else {
-				this.lernenInfo = "korrekte Antwort: " + this.selectedTestItem.Vokabel.Deutsch;
+				this.lernenInfo = "korrekte Antwort: <span class='correct'>" + this.selectedTestItem.Vokabel.Deutsch + "</span>";
 			}
 			switch (this.selectedTestItem.Source) {
 				case SOURCES.ALL:
@@ -373,6 +373,10 @@ let app = new Vue({
 			}
 		}
 		
+		Vue.nextTick(function () {
+		  // DOM updated
+		  $('#buttonWeiter').focus();
+		})	
 	},
 	
 	addCharacter: function(c) {

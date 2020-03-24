@@ -87,6 +87,7 @@ a, a:hover, a:visited, a:active, a:link {
 
 .lernenInfo {
 	min-height: 132px;
+	text-align: center;
 }
 
 #textareaFrage, #textareaAntwort {
@@ -96,6 +97,11 @@ a, a:hover, a:visited, a:active, a:link {
 a.link, a.link:hover, a.link:visited, a.link:active, a.link:link {
 	text-decoration: underline;
     color: #7f7fe8;
+}
+
+.correct {
+	font-size: 140%;
+	color: #fd9090;
 }
 
 @media (max-height: 650px) { 
