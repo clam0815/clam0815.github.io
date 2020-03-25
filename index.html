@@ -19,7 +19,7 @@
 <body class="fullscreen">
   <div id="app">
 	  <header>
-		<a v-on:click="showStart">Vokabulator</a>
+		<a v-on:click="showStart"><span class="title">Vokabulator</span></a>
 		<span v-if="sammlung != null"> - {{ sammlung.Name }}</span>		
 	  </header>
 	  
@@ -32,8 +32,8 @@
 				{{ sammlung.Name }}
 			</button>
 			
-			<button class="btn btn-success" style="margin-top: 30px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
-			<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showInfo">Info</button>
+			<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
+			<button class="btn btn-secondary" v-on:click="showInfo">Info</button>
 		  </div>
 		  
 		  <div class="container" v-if="page === PAGES.INFO">
@@ -55,10 +55,10 @@
 		  </div>
 		  
 		  <div id="operationen" class="container" v-if="page === PAGES.OPERATIONEN">
-			<button class="btn btn-success" v-on:click="showEingeben">Vokabeln eingeben</button>
-			<button class="btn btn-success" v-on:click="showImportieren">Vokabeln importieren</button>
+			<button class="btn btn-secondary" v-on:click="showEingeben">Vokabeln eingeben</button>
+			<button class="btn btn-secondary" v-on:click="showImportieren">Vokabeln importieren</button>
 			<button class="btn btn-secondary d-none d-sm-block" v-on:click="showBearbeiten">Vokabeln bearbeiten</button>
-			<button class="btn btn-danger" v-on:click="showLoeschen">Sammlung löschen</button>
+			<button class="btn btn-secondary" v-on:click="showLoeschen">Sammlung löschen</button>
 			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showLernenOperationen">Vokabeln lernen</button>
 		  </div>
 		  
@@ -102,7 +102,7 @@
 		   <div id="lernenOperationen" class="container" v-if="page === PAGES.LERNENOPERATIONEN">
 				<button class="btn btn-primary" v-on:click="showLernen(1)">Deutsch - {{ sammlung.Sprache }}</button>
 				<button class="btn btn-primary" v-on:click="showLernen(2)">{{ sammlung.Sprache }} - Deutsch</button>
-				<button class="btn btn-secondary"  v-on:click="showOperationen">zurück</button>
+				<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showOperationen">zurück</button>
 		   </div>
 		   
 		   <div id="lernen" class="container" v-if="page === PAGES.LERNEN">
