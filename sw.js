@@ -8,7 +8,8 @@ var filesToCache = [
   '/js/jquery-3.3.1.slim.min.js',
   '/js/popper.min.js',
   '/js/vue2_6_11.js',
-  '/js/main.js'
+  '/js/main.js',
+  '/js/tools.js'
 ];
 
 /* Start the service worker and cache all of the app's content */
