@@ -18,12 +18,12 @@
 </head>
 <body class="fullscreen">
   <div id="app">
-	  <div class="header">
+	  <header>
 		<a v-on:click="showStart">Vokabulator</a>
 		<span v-if="sammlung != null"> - {{ sammlung.Name }}</span>		
-	  </div>
+	  </header>
 	  
-	  <div class="main">
+	  <div id="main">
 
 		  <div id="start" class="container" v-if="page === PAGES.START">
 			<div v-if="sammlungen.length > 0" style="margin-bottom: 10px;">Sammlungen</div>
@@ -37,11 +37,12 @@
 		  </div>
 		  
 		  <div class="container" v-if="page === PAGES.INFO">
-			<p>Vokabulator ist ein privates Spaßprojekt von <a class="link" href="mailto:bending_bender@gmx.net">Christian Lambert</a>. Bei Fragen oder Anregungen könnt ihr mir gerne schreiben.</p>
+			<p>Vokabulator ist ein privates Spaßprojekt von <a class="link" href="mailto:bending_bender@gmx.net">Christian Lambert</a>.
+			Bei Fragen oder Anregungen könnt ihr mir gerne schreiben.</p>
 			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showStart">zurück</button>
 		  </div>
 		  
-		  <div id="anlegen" class="container" v-if="page === PAGES.ANLEGEN">
+		  <div class="container" v-if="page === PAGES.ANLEGEN">
 			Name<br />
 			<input type="text" class="form-control" v-model="name" /><br />
 			Sprache<br />
@@ -127,7 +128,7 @@
 					</span>
 					
 					<br />
-					<textarea id="textareaAntwort" class="form-control" v-model="antwort" style="margin-bottom: 15px" @keydown.enter.exact.prevent @keyup.enter.exact="$('#buttonPruefen').focus();"></textarea>
+					<textarea id="textareaAntwort" class="form-control" v-model="antwort" style="margin-bottom: 15px" @keydown.enter.exact.prevent @keyup.enter.exact="pruefen"></textarea>
 										
 					<button class="btn btn-small btn-secondary" v-for="c in specialCharacters" v-on:click="app.addCharacter(c)"> {{c}} </button>
 				</div>
@@ -142,48 +143,19 @@
 					<button id="buttonPruefen" @keydown.enter.exact.prevent @keyup.enter.exact="pruefen" v-if="lernenInfo.length == 0" class="btn btn-primary" v-on:click="pruefen">Prüfen</button>
 					<button id="buttonWeiter" @keydown.enter.exact.prevent @keyup.enter.exact="nextTest" v-if="lernenInfo.length != 0" class="btn btn-primary" v-on:click="nextTest">Weiter</button>
 				</div>
-		   </div>
-		   
-		   <table style="display: none">
-				<tr>
-					<td style="vertical-align: top">
-						All<br />
-						<div v-for="testitem in testAll">
-							{{ testitem.Vokabel.Deutsch }}
-						</div>
-					</td>
-					<td style="vertical-align: top">
-						Correct<br />
-						<div v-for="testitem in testCorrect">
-							{{ testitem.Vokabel.Deutsch }}
-						</div>
-					</td>
-					<td style="vertical-align: top">
-						Incorrect<br />
-						<div v-for="testitem in testIncorrect">
-							{{ testitem.Vokabel.Deutsch }}
-						</div>
-					</td>
-					<td style="vertical-align: top">
-						FinallyCorrect<br />
-						<div v-for="testitem in testCorrectFinal">
-							{{ testitem.Vokabel.Deutsch }}
-						</div>
-					</td>
-				</tr>
-			</table>
-		   
+		   </div>	   
 	  </div>
 	  
-	  <div class="footer">
+	  <footer>
 		Sammlungen: {{ sammlungen.length }} &nbsp;&nbsp; Vokabeln: {{ vokabeln.length }}
-	  </div>
+	  </footer>
   </div>
   
   <script src="js/jquery-3.3.1.slim.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
   <script src="js/vue2_6_11.js"></script>
+  <script src="js/tools.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

@@ -4,7 +4,7 @@ body {
   color: #fff;
 }
 
-.header {
+header {
 	font-family: monospace;
 	font-size: 150%;
 	color: #9e9e9e;
@@ -15,16 +15,16 @@ body {
 	padding: 10px;
 }
 
-.header a:hover {
+header a:hover {
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.main {
+#main {
 	margin-bottom: 90px;
 }
 
-.footer {
+footer {
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -37,7 +37,6 @@ body {
 	color: #9e9e9e;
 }
 
-/* Center the content in the browser window */
 .container {
   margin: auto;
   max-width: 500px;
@@ -86,7 +85,7 @@ a, a:hover, a:visited, a:active, a:link {
 }
 
 .lernenInfo {
-	min-height: 132px;
+	min-height: 131px;
 	text-align: center;
 }
 
@@ -134,7 +133,7 @@ a.link, a.link:hover, a.link:visited, a.link:active, a.link:link {
 		font-size: 12px;
 	}
 		
-	.header {
+	header {
 		padding: 0px;
 		margin-bottom: 10px;
 	}
