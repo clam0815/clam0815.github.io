@@ -82,6 +82,14 @@ a, a:hover, a:visited, a:active, a:link {
 	margin-top: 20px;
 }
 
+.config {
+	width: 260px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
 .lernenStatistik {
 	margin: 20px;
 	font-size: 90%;

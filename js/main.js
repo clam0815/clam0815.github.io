@@ -54,6 +54,7 @@ let app = new Vue({
 	frage: "",
 	antwort: "",
 	lernenInfo: "",
+	lernModus: "last30",
 	importInput: "",
 	specialCharacters: ["á", "à", "â", "é", "è", "ê", "ó", "ò", "ô", "ú", "ù", "û", "ç"]
   },
@@ -200,10 +201,20 @@ let app = new Vue({
 		
 		let rest = [];
 		
+		if (this.lernModus === "all")
+		{
+			for (let i = 0; i < this.vokabeln.length; i++)
+			{
+				let testItem = new TestItem(this.vokabeln[i]);			
+				this.testAll.push(testItem);
+			}
+			return;
+		}
+		
 		for (let i = this.vokabeln.length - 1; i > 0; i--)
 		{
 			let testItem = new TestItem(this.vokabeln[i]);
-			if (this.testAll.length < 30)
+			if (this.lernModus === 'last30' && this.testAll.length < 30)
 			{
 				this.testAll.push(testItem);
 			} else {
@@ -212,7 +223,7 @@ let app = new Vue({
 		}
 		
 		shuffle(rest);
-		
+				
 		for (let i = 0; i < rest.length; i++)
 		{
 			this.testAll.push(rest[i]);

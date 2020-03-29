@@ -99,9 +99,16 @@
 			<a class="btn btn-secondary" download="vokabeln.txt" v-bind:href="exportURL">Exportieren</a>
 		  </div>
 		  
-		   <div id="lernenOperationen" class="container" v-if="page === PAGES.LERNENOPERATIONEN">
+		   <div id="lernenOperationen" class="container" v-if="page === PAGES.LERNENOPERATIONEN">				
 				<button class="btn btn-primary" v-on:click="showLernen(1)">Deutsch - {{ sammlung.Sprache }}</button>
 				<button class="btn btn-primary" v-on:click="showLernen(2)">{{ sammlung.Sprache }} - Deutsch</button>
+				
+				<div class="config">
+					<input type="radio" value="last30" v-model="lernModus" /> die letzten 30 Vokabeln als erstes<br />
+					<input type="radio" value="random" v-model="lernModus" /> zufällig<br />
+					<input type="radio" value="all" v-model="lernModus" /> chronologisch
+				</div>
+				
 				<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showOperationen">zurück</button>
 		   </div>
 		   
