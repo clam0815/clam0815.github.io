@@ -7,7 +7,7 @@
   <meta name="theme-color" content="white"/>
  </head>
 <body class="fullscreen">
-  <div id="output" style="float: right; width: 100px;">
+  <div id="output" style="float: right; width: 100px; min-height: 100px; background-color: #ff0;">
   
   </div>
 
@@ -15,7 +15,7 @@
 	  
   </div>
   
-  <script src="jquery-3.3.1.slim.min"></script>
+  <script src="jquery-3.3.1.slim.min.js"></script>
   <script src="touch-emulator.js"></script>
   <script src="hammer.min.js"></script>
  
@@ -26,7 +26,7 @@
 	 
 		var hammertime = new Hammer(myElement);
 		hammertime.get('pinch').set({ enable: true });
-		hammertime.on('pinch', function(ev) {
+		hammertime.on('pinch pan', function(ev) {
 			console.log(ev);
 			$('#output').html(ev.scale);
 		});
