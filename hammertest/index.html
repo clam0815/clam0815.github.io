@@ -26,7 +26,7 @@
 	 
 		var hammertime = new Hammer(myElement);
 		hammertime.get('pinch').set({ enable: true });
-		hammertime.on('pinch pan', function(ev) {
+		hammertime.on('pinch', function(ev) {
 			console.log(ev);
 			$('#output').html(ev.scale);
 		});
