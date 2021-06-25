@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hammertest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="white"/>
+ </head>
+<body class="fullscreen">
+  <div id="output" style="float: right; width: 100px; min-height: 100px; background-color: #ff0;">
+  
+  </div>
+
+  <div id="app" style="width: 300px; height: 600px; background-color: #f00;">
+	  
+  </div>
+  
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <script src="touch-emulator.js"></script>
+  <script src="hammer.min.js"></script>
+ 
+  <script>
+		TouchEmulator();
+		
+		var myElement = document.getElementById('app');
+	 
+		var hammertime = new Hammer(myElement);
+		hammertime.get('pinch').set({ enable: true });
+		hammertime.on('pinch', function(ev) {
+			console.log(ev);
+			$('#output').html(ev.scale);
+		});
+  </script>
+  
+</body>
+</html>

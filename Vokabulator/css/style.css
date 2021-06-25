@@ -1,0 +1,152 @@
+body {
+  font-family: sans-serif;
+  background-color: #333;
+  color: #fff;
+}
+
+header {
+	font-family: monospace;
+	font-size: 150%;
+	color: #9e9e9e;
+	text-align: center;
+	margin-bottom: 20px;
+	background-color: #222;
+	border-bottom: 1px solid #444;
+	padding: 10px;
+}
+
+.title {
+	color: #ff0;
+}
+
+header a:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#main {
+	margin-bottom: 90px;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: center;
+	background-color: #222;
+	border-top: 1px solid #444;
+	font-size: 90%;
+	padding: 5px;
+	color: #9e9e9e;
+}
+
+.container {
+  margin: auto;
+  max-width: 500px;
+}
+
+#start {
+	text-align: center;
+}
+
+#start button, #operationen button, #lernenOperationen button {
+	display: block;
+	margin-bottom: 10px;
+	min-width: 210px;
+	max-width: 210px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#bearbeiten {
+	max-width: 1000px;
+}
+
+#bearbeiten table {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+a, a:hover, a:visited, a:active, a:link {
+	color: #fff;
+}
+
+#lernen .btn-small {
+	padding: 2px;
+	margin-right: 5px;
+	min-width: 20px;
+}
+
+.lernenButtons {
+	margin-top: 20px;
+}
+
+.config {
+	width: 260px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.lernenStatistik {
+	margin: 20px;
+	font-size: 90%;
+	text-align: center;
+}
+
+.lernenInfo {
+	min-height: 131px;
+	text-align: center;
+}
+
+#textareaFrage, #textareaAntwort {
+	margin-bottom: 20px;
+}
+
+a.link, a.link:hover, a.link:visited, a.link:active, a.link:link {
+	text-decoration: underline;
+    color: #7f7fe8;
+}
+
+.correct {
+	font-size: 140%;
+	color: #fd9090;
+}
+
+@media (max-height: 650px) { 
+	#textareaAntwort, #textareaFrage {
+		height: 25px;
+		line-height: 12px;
+		margin-bottom: 10px;
+	}
+	
+	#lernen .btn-small {
+		padding: 0px;
+	}
+	
+	.lernenStatistik {
+		position: fixed;
+		bottom: 15px;
+		left: 0;
+		right: 0;
+	}
+	
+	.btn {
+		padding: .25rem .5rem;
+	}
+	
+	.lernenInfo {
+		min-height: 94px;
+	}
+	
+	body {
+		font-size: 12px;
+	}
+		
+	header {
+		padding: 0px;
+		margin-bottom: 10px;
+	}
+}
