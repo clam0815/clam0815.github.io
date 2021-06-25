@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="manifest" href="/manifest.json">
+		<script type='text/javascript' src='jquery.js'></script>
+		<link rel="stylesheet" href="pure-min.css">
+		<link rel="stylesheet" href="style.css">
+		<meta name="theme-color" content="white"/>
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="Mathefux">
+		<meta name="msapplication-TileImage" content="images/icon-144.png">
+		<meta name="msapplication-TileColor" content="#FFFFFF">
+	</head>
+	<body>
+		<div id="header">Mathe-Fux</div>
+		<div class="pure-g">
+			<div class="pure-u-1-1">
+				<div id="text">Spielauswahl</div>
+			</div>
+			<div class="pure-u-1-1">
+				<a href="plus.html" class="pure-button answer second">+</a><br />
+				<a href="minus.html" class="pure-button answer second">-</a><br />
+				<a href="mal.html" class="pure-button answer second">&#x2022;</a><br />
+				<a href="durch.html" class="pure-button answer second">:</a><br />
+			</div>			
+		</div>
+		<div id="footer">
+			<div class="footerinfo">von Chris Lambert</div>
+		</div>
+	</body>
+	
+	<script>
+		window.onload = () => {
+		  'use strict';
+
+		  if ('serviceWorker' in navigator) {
+			navigator.serviceWorker
+					 .register('./sw.js');
+		  }
+		}
+	</script>
+</html>
