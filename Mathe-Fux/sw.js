@@ -1,18 +1,18 @@
 var cacheName = 'mathefux-pwa';
 var filesToCache = [
   '/',
-  '/index.html',
-  '/durch.html',
-  '/mal.html',
-  '/minus.html',
-  '/plus.html',
-  '/pure-min.css',
-  '/style.css',
-  '/jquery.js',
-  '/scriptdurch.js',
-  '/scriptmal.js',
-  '/scriptminus.js',
-  '/scriptplus.js'
+  'index.html',
+  'durch.html',
+  'mal.html',
+  'minus.html',
+  'plus.html',
+  'pure-min.css',
+  'style.css',
+  'jquery.js',
+  'scriptdurch.js',
+  'scriptmal.js',
+  'scriptminus.js',
+  'scriptplus.js'
 ];
 
 /* Start the service worker and cache all of the app's content */
