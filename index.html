@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Vokabulator</title>
+  <title>Rechner</title>
   <link rel="manifest" href="/manifest.json">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
@@ -12,157 +12,88 @@
   <meta name="theme-color" content="white"/>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Hello World">
+  <meta name="apple-mobile-web-app-title" content="Rechner">
   <meta name="msapplication-TileImage" content="images/icon-144.png">
   <meta name="msapplication-TileColor" content="#FFFFFF">
+  
+		<script>
+			var formula = "";
+		
+			function clearresults() {
+				formula = "";
+				$('#result').html(formula);
+			}
+		
+			function num(v) {
+				formula += v;
+				$('#result').html(formula);
+			}
+			
+			function op(o) {
+				formula += o;
+				$('#result').html(formula);
+			}
+			
+			function compute() {
+				formula = eval(formula);
+				$('#result').html(formula);
+			}
+			
+		</script>
+		
+		<style>
+			html, body {
+				background-color: #555;
+			}
+		
+			.btn {
+				width: 50px;
+				height: 50px;
+				margin: 5px;
+			}
+			
+			#result {
+				border: 1px solid #ddd;
+				width: 240px;
+				height: 130px;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 30px;
+				margin-bottom: 10px;
+				color: #fff;
+				text-align: left;
+				padding: 5px;
+			}
+			
+			#rechner {
+				text-align: center;
+			}
+		</style>
 </head>
 <body class="fullscreen">
-  <div id="app">
-	  <header>
-		<a v-on:click="showStart"><span class="title">Vokabulator</span></a>
-		<span v-if="sammlung != null"> - {{ sammlung.Name }}</span>		
-	  </header>
-	  
-	  <div id="main">
-
-		  <div id="start" class="container" v-if="page === PAGES.START">
-			<div v-if="sammlungen.length > 0" style="margin-bottom: 10px;">Sammlungen</div>
-			
-			<button class="btn btn-primary" v-for="sammlung in sammlungen" v-on:click="loadVokabeln(sammlung)">
-				{{ sammlung.Name }}
-			</button>
-			
-			<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showAnlegen">Neue Sammlung anlegen</button>
-			<button class="btn btn-secondary" v-on:click="showInfo">Info</button>
-		  </div>
-		  
-		  <div class="container" v-if="page === PAGES.INFO">
-			<p>Vokabulator ist ein privates Spaßprojekt von <a class="link" href="mailto:bending_bender@gmx.net">Christian Lambert</a>.
-			Bei Fragen oder Anregungen könnt ihr mir gerne schreiben.</p>
-			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showStart">zurück</button>
-		  </div>
-		  
-		  <div class="container" v-if="page === PAGES.ANLEGEN">
-			Name<br />
-			<input type="text" class="form-control" v-model="name" /><br />
-			Sprache<br />
-			<select class="form-control" v-model="sprache">
-				<option>Französisch</option>
-				<option>Englisch</option>
-			</select><br />
-			<button class="btn btn-primary" v-on:click="create">Speichern</button>
-			<button class="btn btn-secondary" v-on:click="showStart">Abbrechen</button>
-		  </div>
-		  
-		  <div id="operationen" class="container" v-if="page === PAGES.OPERATIONEN">
-			<button class="btn btn-secondary" v-on:click="showEingeben">Vokabeln eingeben</button>
-			<button class="btn btn-secondary" v-on:click="showImportieren">Vokabeln importieren</button>
-			<button class="btn btn-secondary d-none d-sm-block" v-on:click="showBearbeiten">Vokabeln bearbeiten</button>
-			<button class="btn btn-secondary" v-on:click="showLoeschen">Sammlung löschen</button>
-			<button class="btn btn-primary" style="margin-top: 20px;" v-on:click="showLernenOperationen">Vokabeln lernen</button>
-		  </div>
-		  
-		  <div id="eingeben" class="container" v-if="page === PAGES.EINGEBEN">
-			Deutsch<br />
-			<textarea id="textareaDeutsch" @keydown.enter.exact.prevent @keyup.enter.exact="$('#textareaUebersetzung').focus();" class="form-control" v-model="deutsch"></textarea><br />
-			{{ sammlung.Sprache }}<br />
-			<textarea id="textareaUebersetzung" @keydown.enter.exact.prevent @keyup.enter.exact="add" class="form-control" v-model="uebersetzung"></textarea><br />
-			<button id="buttonSpeichern" class="btn btn-primary" @keydown.enter.exact.prevent @keyup.enter.exact="add" v-on:click="add">Speichern</button>
-			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
-		  </div>
-		  
-		  <div id="importieren" class="container" v-if="page === PAGES.IMPORTIEREN">
-		    <input type='file' accept='text/plain' v-on:change='openFile(event)'><br><br />
-			<button class="btn btn-primary" :disabled="importInput.length == 0" v-on:click="importFromText">Importieren</button>
-			<button class="btn btn-secondary" v-on:click="showOperationen">Abbrechen</button>
-		  </div>
-		  
-		  <div id="bearbeiten" class="container" v-if="page === PAGES.BEARBEITEN">
-			<table>
-				<tr v-for="vokabel in vokabeln">
-					<td>
-						<textarea class="form-control" v-model="vokabel.Deutsch"></textarea>
-					</td>
-					<td>
-						<textarea class="form-control" v-model="vokabel.Uebersetzung"></textarea>
-					</td>
-					<td>
-						<button class="btn btn-danger" style="margin-left: 5px" v-on:click="deleteVokabel(vokabel)">Löschen</button>
-					</td>
-				</tr>
-			</table>
-			<div style="float: right">
-				<button class="btn btn-secondary" v-on:click="cancelUpdate">Abbrechen</button>
-				<button class="btn btn-primary" v-on:click="update">Speichern</button>
-			</div>
-			
-			<a class="btn btn-secondary" download="vokabeln.txt" v-bind:href="exportURL">Exportieren</a>
-		  </div>
-		  
-		   <div id="lernenOperationen" class="container" v-if="page === PAGES.LERNENOPERATIONEN">				
-				<button class="btn btn-primary" v-on:click="showLernen(1)">Deutsch - {{ sammlung.Sprache }}</button>
-				<button class="btn btn-primary" v-on:click="showLernen(2)">{{ sammlung.Sprache }} - Deutsch</button>
-				
-				<div class="config">
-					<input type="radio" value="last30" v-model="lernModus" /> die letzten 30 Vokabeln als erstes<br />
-					<input type="radio" value="random" v-model="lernModus" /> zufällig<br />
-					<input type="radio" value="all" v-model="lernModus" /> chronologisch
-				</div>
-				
-				<button class="btn btn-secondary" style="margin-top: 20px;" v-on:click="showOperationen">zurück</button>
-		   </div>
-		   
-		   <div id="lernen" class="container" v-if="page === PAGES.LERNEN">
-				<div class="lernenStatistik">
-					Richtige Antworten: {{ testCorrect.length + testCorrectFinal.length }} &nbsp;&nbsp; Falsche Antworten: {{ testIncorrect.length }}
-				</div>
-				
-				<span v-if="testTyp === 1">				
-					Deutsch
-				</span>
-				<span v-if="testTyp === 2">				
-					{{ sammlung.Sprache }}
-				</span>
-				
-				<textarea id="textareaFrage" disabled="Disabled" class="form-control disabled" v-model="frage" @keydown.enter.exact.prevent @keyup.enter.exact="$('#textareaAntwort').focus();"></textarea>
-				
-				<div v-if="lernenInfo.length == 0">
-					<span v-if="testTyp === 1">				
-						{{ sammlung.Sprache }}
-					</span>
-					<span v-if="testTyp === 2">				
-						Deutsch
-					</span>
-					
-					<br />
-					<textarea id="textareaAntwort" class="form-control" v-model="antwort" style="margin-bottom: 15px" @keydown.enter.exact.prevent @keyup.enter.exact="pruefen"></textarea>
-										
-					<button class="btn btn-small btn-secondary" v-for="c in specialCharacters" v-on:click="app.addCharacter(c)"> {{c}} </button>
-				</div>
-
-				<div class="lernenInfo" v-bind:style="(lernenInfo.indexOf('richtig') === 0 ? 'color: #0f0' : 'color: #f00;')" v-if="lernenInfo.length > 0" v-html="lernenInfo">
-				</div>
-				
-				<div class="lernenButtons">			
-					<div style="float: right">
-						<button class="btn btn-secondary" v-on:click="showLernenOperationen">Abbrechen</button>
-					</div>
-					<button id="buttonPruefen" @keydown.enter.exact.prevent @keyup.enter.exact="pruefen" v-if="lernenInfo.length == 0" class="btn btn-primary" v-on:click="pruefen">Prüfen</button>
-					<button id="buttonWeiter" @keydown.enter.exact.prevent @keyup.enter.exact="nextTest" v-if="lernenInfo.length != 0" class="btn btn-primary" v-on:click="nextTest">Weiter</button>
-				</div>
-		   </div>	   
-	  </div>
-	  
-	  <footer>
-		Sammlungen: {{ sammlungen.length }} &nbsp;&nbsp; Vokabeln: {{ vokabeln.length }}
-	  </footer>
-  </div>
+	<div id="rechner">
+		<div id="result"></div>
+		<button onclick="clearresults()" class="btn btn-secondary">C</button>
+		<button onclick="op('(')" class="btn btn-secondary">(</button>
+		<button onclick="op(')')" class="btn btn-secondary">)</button>
+		<button onclick="op('/')" class="btn btn-secondary">/</button><br />
+		<button onclick="num(7)" class="btn btn-primary">7</button>
+		<button onclick="num(8)" class="btn btn-primary">8</button>
+		<button onclick="num(9)" class="btn btn-primary">9</button>
+		<button onclick="op('*')" class="btn btn-secondary">*</button><br />
+		<button onclick="num(4)" class="btn btn-primary">4</button>
+		<button onclick="num(5)" class="btn btn-primary">5</button>
+		<button onclick="num(6)" class="btn btn-primary">6</button>
+		<button onclick="op('-')" class="btn btn-secondary">-</button><br />
+		<button onclick="num(1)" class="btn btn-primary">1</button>
+		<button onclick="num(2)" class="btn btn-primary">2</button>
+		<button onclick="num(3)" class="btn btn-primary">3</button>
+		<button onclick="op('+')" class="btn btn-secondary">+</button><br />
+		
+		<button class="btn btn-primary" style="margin-left: 60px;">0</button>
+		<button class="btn btn-primary">,</button>
+		<button onclick="compute()" class="btn btn-success">=</button>
+	</div>
   
-  <script src="js/jquery-3.3.1.slim.min.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/vue2_6_11.js"></script>
-  <script src="js/tools.js"></script>
-  <script src="js/main.js"></script>
-</body>
+ </body>
 </html>
