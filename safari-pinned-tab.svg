@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="972"
+   height="972"
+   viewBox="0 0 972 972"
+   version="1.1"
+   id="svg55"
+   sodipodi:docname="safari-pinned-tab.svg"
+   inkscape:version="1.2 (dc2aedaf03, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview57"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="true"
+     inkscape:zoom="1.0565844"
+     inkscape:cx="364.38169"
+     inkscape:cy="486"
+     inkscape:window-width="2560"
+     inkscape:window-height="1351"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg55">
+    <inkscape:grid
+       type="xygrid"
+       id="grid59" />
+  </sodipodi:namedview>
+  <defs
+     id="defs49">
+    <style
+       id="style40">
+      .cls-1 {
+        filter: url(#filter);
+      }
+    </style>
+    <filter
+       id="filter"
+       filterUnits="userSpaceOnUse">
+      <feFlood
+         result="flood"
+         id="feFlood42" />
+      <feComposite
+         result="composite"
+         operator="in"
+         in2="SourceGraphic"
+         id="feComposite44" />
+      <feBlend
+         result="blend"
+         in2="SourceGraphic"
+         id="feBlend46" />
+    </filter>
+  </defs>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;font-family:Arial;-inkscape-font-specification:Arial;fill:#000000"
+     x="151.43135"
+     y="508.24149"
+     id="text115"><tspan
+       sodipodi:role="line"
+       id="tspan113"
+       x="151.43135"
+       y="508.24149">Sudoku</tspan></text>
+</svg>

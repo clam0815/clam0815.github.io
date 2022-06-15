@@ -1,3 +1,2 @@
-# Dummy
-
-This is a template for progressive web apps
+# Sudoku
+## Simple Sudoku game
