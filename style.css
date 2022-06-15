@@ -54,6 +54,7 @@ td.fix {
 
 td.selected {
 	background-color: #ff0;
+	border-color: #000;
 }
 
 td.error {
@@ -72,14 +73,14 @@ button {
 }
 
 .numberbutton {
-	width: 28px;
-	height: 28px;
+	width: 35px;
+	height: 35px;
 	background-color: #00a4ff;
 }
 
 .markbutton {
-	width: 20px;
-	height: 20px;
+	width: 30px;
+	height: 30px;
 	background-color: #00a4ff;
 	padding: 0;
 	font-size: 80%;

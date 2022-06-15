@@ -2,4 +2,4 @@ User-agent: *
 Disallow: /.git
 Allow: /
 
-Sitemap: https://simplepwa.com/sitemap.xml
+Sitemap: https://clam0815.github.io/sitemap.xml
