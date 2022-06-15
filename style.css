@@ -1,5 +1,5 @@
 html, body {
-	background-color: #b9e3ff;
+	background-color: #fff;
 	color: #555;
 	font-family: helvetica, arial, sans-serif;
 	font-size: 14px;
@@ -13,7 +13,7 @@ body {
 	padding: 20px;
 }
 
-#board {
+table {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	border-spacing: 0;
@@ -24,11 +24,14 @@ body {
 	margin-right: auto;
 }
 
-#board td {
-	width: 32px;
-	height: 32px;
+td {
+	width: 34px;
+	height: 34px;
 	text-align: center;
 	margin: 0;
+	padding: 0;
+	position: relative;
+	font-size: 20px;
 }
 
 td {
@@ -57,10 +60,39 @@ td.error {
 	background-color: #fd8585;
 }
 
-.numberbutton {
-	width: 30px;
-	height: 30px;
-	background-color:#d2b8ff;
+button {
 	border-radius: 3px;
-	border: 1px solid #333;
+	border: 1px solid #fff;
+	color: #fff;
+}
+
+.actionbutton {
+	background-color: #9100be;
+	padding: 5px;
+}
+
+.numberbutton {
+	width: 28px;
+	height: 28px;
+	background-color: #00a4ff;
+}
+
+.markbutton {
+	width: 20px;
+	height: 20px;
+	background-color: #00a4ff;
+	padding: 0;
+	font-size: 80%;
+}
+
+.markbutton.selected {
+	background-color: #999;
+}
+
+.m {
+	position: absolute;
+	font-size: 10px;
+	line-height: 10px;
+	top: 1px;
+	left: 1px;
 }

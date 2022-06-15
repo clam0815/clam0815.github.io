@@ -11,6 +11,10 @@ function newGame() {
     puzzle = puzzleSolution[0];
     solution = puzzleSolution[1];
 
+    resetGame();
+}
+
+function resetGame() {
     let counter = 0;
     $("#board").empty();
     for (let r=1; r < 10; r++) {
@@ -19,9 +23,16 @@ function newGame() {
         for (let c=1; c < 10; c++) {
             const td = document.createElement("td");
             $(td).attr("class", "C" + c);
+            const div = document.createElement("div");
+            $(div).addClass("number");
+            $(td).append(div);
             if (puzzle[counter] != "0") {
-                $(td).append(puzzle[counter]).addClass("fix");
+                $(div).append(puzzle[counter]);
+                $(td).addClass("fix");
             }
+            const divM = document.createElement("div");
+            $(divM).addClass("m");
+            $(td).append(divM);
             counter++;
             $(td).attr("onclick", "cellClicked(" + r + "," + c +")");
             $(tr).append(td);            
@@ -72,7 +83,7 @@ function check() {
 
 function checkCell(numbers, r, c) {
     const cell = $('.R' + r).find(".C" + c);
-    const value = $(cell).html();
+    const value = $(cell).find(".number").html();
     if (value.length > 0) {
         if (numbers.indexOf(value) >= 0) {
             $('.R' + r).find(".C" + c).removeClass("selected").addClass("error");
@@ -89,9 +100,35 @@ function checkCell(numbers, r, c) {
 //  1 - 9 small numbers (marks) around the border
 //  1 - 9 small numbers in the cell
 //  background color
+//  undo
 
 function buttonClicked(number) {
-    $(".selected").html(number == 0 ? "" : number);
+    $("td.selected .number").html(number == 0 ? "" : number);
+}
+
+function markButtonClicked(number) {
+    if (number == 0) {
+        $(".markbutton.selected").removeClass("selected");
+    } else {
+        $("#markbutton" + number).toggleClass("selected");
+    }
+
+    if ($("td.selected").length == 0) {
+        return;
+    }
+
+    let marks = "";
+
+    for (let i = 1; i < 10; i++) {
+        if ($("#markbutton" + i).hasClass("selected")) {
+            if (marks.length > 0) {
+                marks += " ";
+            }
+            marks += i;
+        }
+    }
+
+    $("td.selected").find(".m").html(marks);
 }
 
 function cellClicked(r, c) {
@@ -99,7 +136,14 @@ function cellClicked(r, c) {
     const cell = $('.R' + r).find(".C" + c)
     if (!$(cell).hasClass("fix")) {
         $(cell).addClass("selected");
-    }    
+        const marks = $(cell).find(".m").html();
+        for (let i = 1; i < 10; i++) {
+            if (marks.indexOf(i.toString()) > -1) {
+                $("#markbutton" + i).addClass("selected");
+            }
+        }
+    }
+    
 }
 
 newGame();
