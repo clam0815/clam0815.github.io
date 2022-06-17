@@ -34,7 +34,8 @@ self.addEventListener("install", event => {
 				"index.html", // Main HTML file
 				"logo.png", // Logo
 				"main.js", // Main Javascript file
-				"jquery.js", // JQuery file
+				"jquery.js", // JQuery library file
+				"nosleep.js", // nosleep library file
 				"manifest.json", // Manifest file
 				"maskable_icon.png", // Favicon, maskable https://web.dev/maskable-icon
 				"mstile-70x70.png", // Favicon, Windows 8 / IE11
