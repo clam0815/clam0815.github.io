@@ -63,7 +63,7 @@ td.error {
 
 button {
 	border-radius: 3px;
-	border: 1px solid #fff;
+	border: 0;
 	color: #fff;
 }
 
@@ -81,6 +81,10 @@ button {
 	background-color: #555;
 }
 
+.actionbutton.disabled {
+	background-color: #999;
+}
+
 .numberbutton {
 	width: 40px;
 	height: 40px;
@@ -89,8 +93,8 @@ button {
 }
 
 .markbutton {
-	width: 35px;
-	height: 35px;
+	width: 40px;
+	height: 40px;
 	background-color: #00a4ff;
 	padding: 0;
 	font-size: 80%;
@@ -128,16 +132,36 @@ button {
 	margin-top: 20px;
 }
 
-#easy {
+.switchbutton.left {
 	margin-right: 0px;
 	border-right: 0px;
 	border-top-right-radius: 0;
 	border-bottom-right-radius: 0;
 }
 
-#hard {
+.switchbutton.right {
 	margin-left: 0px;
 	border-left: 0px;
 	border-top-left-radius: 0;
 	border-bottom-left-radius: 0;
+}
+
+#controls {
+	background-color: #ddd;
+	border-radius: 3px;
+	max-width: 320px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#controlbuttons {
+	margin-bottom: 20px;
+	padding: 2px;
+	background-color: #aaa;
+}
+
+#specialbuttons {
+	margin-top: 10px;
+	padding: 10px;
 }

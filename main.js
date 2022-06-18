@@ -7,6 +7,9 @@ const numberPuzzles = puzzles.length;
 let puzzle = null;
 let solution = null;
 
+let undoStack = [];
+let redoStack = [];
+
 const noSleep = new NoSleep();
 
 let wakeLockEnabled = false;
@@ -37,6 +40,20 @@ function level(easy) {
     newGame();
 }
 
+function mode(v) {
+    if (v == 1) {
+        $('#numberbuttons').show();
+        $('#markbuttons').hide();
+        $('#numbers').removeClass("unselected");
+        $('#mark').addClass("unselected");
+    } else {
+        $('#numberbuttons').hide();
+        $('#markbuttons').show();
+        $('#numbers').addClass("unselected");
+        $('#mark').removeClass("unselected");
+    }
+}
+
 function newGame() {
     let randomPuzzleIndex = Math.floor(Math.random() * (numberPuzzles + 1));
     let puzzleSolution = puzzles[randomPuzzleIndex].split(",");
@@ -54,6 +71,7 @@ function resetGame() {
         $(tr).attr("class", "R" + r);
         for (let c=1; c < 10; c++) {
             const td = document.createElement("td");
+            $(td).attr("id", "C" + r + c);
             $(td).attr("class", "C" + c);
             const div = document.createElement("div");
             $(div).addClass("number");
@@ -71,6 +89,8 @@ function resetGame() {
         }
         $("#board").append(tr);
     }
+    undoStack = [];
+    redoStack = [];
 }
 
 function check() {
@@ -85,7 +105,9 @@ function check() {
             if (!checkCell(numbers, r, c)) {
                 return;
             }
-            counter++;    
+            if (!cellIsNull(r,c)) {
+                counter++;    
+            };
         }
     }
 
@@ -121,6 +143,12 @@ function check() {
     showInfo("Keine Fehler gefunden")
 }
 
+function cellIsNull(r, c) {
+    const cell = $('.R' + r).find(".C" + c);
+    const value = $(cell).find(".number").html();
+    return value.length < 1;
+}
+
 function checkCell(numbers, r, c) {
     const cell = $('.R' + r).find(".C" + c);
     const value = $(cell).find(".number").html();
@@ -135,18 +163,59 @@ function checkCell(numbers, r, c) {
     return true;
 }
 
+function addUndoEntry(fromRedo) {
+    undoStack.push(getState());
+    $("#undobutton").removeClass("disabled");
+    if (!fromRedo) {
+
+    }
+}
+
+function addRedoEntry() {
+    redoStack.push(getState());
+    $("#redobutton").removeClass("disabled");
+}
+
+function getState() {
+    return $("#board").html();
+}
+
+function setState(s) {
+    $("#board").html(s);
+}
+
+function undo() {
+    if (undoStack.length > 0) {
+        addRedoEntry();
+        setState(undoStack.pop());
+    }
+    if (undoStack.length == 0) {
+        $("#undobutton").addClass("disabled");
+    }
+}
+
+function redo() {
+    if (redoStack.length > 0) {
+        addUndoEntry(true);
+        setState(redoStack.pop());
+    }
+    if (redoStack.length == 0) {
+        $("#redobutton").addClass("disabled");
+    }
+}
+
 // todos:
 //  1 - 9 small numbers in the cell
 //  background color for cells
 //  undo
-//  select multiple cells
-//  easy / normal / hard
-//  modal dialogs instead of alerts
 function buttonClicked(number) {
+    addUndoEntry(false);
     $("td.selected .number").html(number == 0 ? "" : number);
 }
 
 function markButtonClicked(number) {
+    addUndoEntry(false);
+    
     if (number == 0) {
         $(".markbutton.selected").removeClass("selected");
     } else {
@@ -172,8 +241,18 @@ function markButtonClicked(number) {
 }
 
 function cellClicked(r, c) {
-    $(".selected").removeClass("selected");
-    const cell = $('.R' + r).find(".C" + c)
+    const cell = $('.R' + r).find(".C" + c);
+    const multiple = !$("#multiple").hasClass("unselected");
+
+    if ($(cell).hasClass("selected")) {
+        $(cell).removeClass("selected");
+        return;
+    }
+
+    if (!multiple) {
+        $(".selected").removeClass("selected");
+    }    
+
     if (!$(cell).hasClass("fix")) {
         $(cell).addClass("selected");
         const marks = $(cell).find(".m").html();
