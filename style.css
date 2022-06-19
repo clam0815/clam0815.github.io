@@ -10,7 +10,7 @@ html, body {
 }
 
 body {
-	padding: 20px;
+	padding-top: 5px;
 }
 
 table {
@@ -112,12 +112,31 @@ button.small {
 	background-color: #999;
 }
 
+.centerbutton {
+	width: 40px;
+	height: 40px;
+	background-color: #00a4ff;
+	padding: 0;
+	font-size: 80%;
+	margin: 1px;
+}
+
+.centerbutton.selected {
+	background-color: #999;
+}
+
 .m {
 	position: absolute;
 	font-size: 10px;
 	line-height: 10px;
 	top: 1px;
 	left: 1px;
+}
+
+.c {
+	font-size: 10px;
+	max-height: 34px;
+	overflow: visible;
 }
 
 #infomessage {
@@ -144,6 +163,16 @@ button.small {
 	border-bottom-right-radius: 0;
 }
 
+.switchbutton.middle {
+	margin-right: 0px;
+	border-right: 1px solid #fff;
+	border-left: 1px solid #fff;
+	border-top-right-radius: 0;
+	border-bottom-right-radius: 0;
+	border-top-left-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
 .switchbutton.right {
 	margin-left: 0px;
 	border-left: 0px;
@@ -162,10 +191,6 @@ button.small {
 
 #controlbuttons {
 	margin-bottom: 20px;
-	padding: 2px;
-	background-color: #aaa;
-	border-top-left-radius: 8px;
-	border-top-right-radius: 8px;
 }
 
 #specialbuttons {

@@ -64,7 +64,7 @@
 
 	<div id="controls">
 		<div id="controlbuttons">
-			<button id="numbers" class="switchbutton left" onclick="mode(1)">Zahlen</button><button id="mark" class="switchbutton right unselected" onclick="mode(2)">Markierungen</button>
+			<button id="numbers" class="switchbutton left" onclick="mode(1)">Zahlen</button><button id="mark" class="switchbutton middle unselected" onclick="mode(2)">Außen</button><button id="center" class="switchbutton right unselected" onclick="mode(3)">Innen</button>
 		</div>
 		<div id="numberbuttons">
 			<button class="numberbutton" onclick="buttonClicked(1)">1</button>
@@ -91,6 +91,19 @@
 			<button class="markbutton" id="markbutton8" onclick="markButtonClicked(8)">8</button>
 			<button class="markbutton" id="markbutton9" onclick="markButtonClicked(9)">9</button>
 			<button class="markbutton" onclick="markButtonClicked(0)">&nbsp;</button>
+		</div>
+		<div id="centerbuttons" style="display: none">
+			<button class="centerbutton" id="centerbutton1" onclick="centerButtonClicked(1)">1</button>
+			<button class="centerbutton" id="centerbutton2" onclick="centerButtonClicked(2)">2</button>
+			<button class="centerbutton" id="centerbutton3" onclick="centerButtonClicked(3)">3</button>
+			<button class="centerbutton" id="centerbutton4" onclick="centerButtonClicked(4)">4</button>
+			<button class="centerbutton" id="centerbutton5" onclick="centerButtonClicked(5)">5</button>
+			<br />
+			<button class="centerbutton" id="centerbutton6" onclick="centerButtonClicked(6)">6</button>
+			<button class="centerbutton" id="centerbutton7" onclick="centerButtonClicked(7)">7</button>
+			<button class="centerbutton" id="centerbutton8" onclick="centerButtonClicked(8)">8</button>
+			<button class="centerbutton" id="centerbutton9" onclick="centerButtonClicked(9)">9</button>
+			<button class="centerbutton" onclick="centerButtonClicked(0)">&nbsp;</button>
 		</div>
 		<div id="specialbuttons">
 			<button class="small switchbutton unselected" id="multiple" onclick="$('#multiple').toggleClass('unselected')"><img src="multi.png" /></button>

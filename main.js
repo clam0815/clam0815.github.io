@@ -41,16 +41,30 @@ function level(easy) {
 }
 
 function mode(v) {
-    if (v == 1) {
-        $('#numberbuttons').show();
-        $('#markbuttons').hide();
-        $('#numbers').removeClass("unselected");
-        $('#mark').addClass("unselected");
-    } else {
-        $('#numberbuttons').hide();
-        $('#markbuttons').show();
-        $('#numbers').addClass("unselected");
-        $('#mark').removeClass("unselected");
+    switch (v) {
+        case 1:
+            $('#numberbuttons').show();
+            $('#markbuttons').hide();
+            $('#centerbuttons').hide();
+            $('#numbers').removeClass("unselected");
+            $('#mark').addClass("unselected");
+            $('#center').addClass("unselected");
+            break;
+        case 2:
+            $('#numberbuttons').hide();
+            $('#markbuttons').show();
+            $('#centerbuttons').hide();
+            $('#numbers').addClass("unselected");
+            $('#mark').removeClass("unselected");
+            $('#center').addClass("unselected");
+            break;
+        case 3:
+            $('#numberbuttons').hide();
+            $('#markbuttons').hide();
+            $('#centerbuttons').show();
+            $('#numbers').addClass("unselected");
+            $('#mark').addClass("unselected");
+            $('#center').removeClass("unselected");
     }
 }
 
@@ -83,6 +97,9 @@ function resetGame() {
             const divM = document.createElement("div");
             $(divM).addClass("m");
             $(td).append(divM);
+            const divC = document.createElement("div");
+            $(divC).addClass("c");
+            $(td).append(divC);
             counter++;
             $(td).attr("onclick", "cellClicked(" + r + "," + c +")");
             $(tr).append(td);            
@@ -214,11 +231,10 @@ function buttonClicked(number) {
     addUndoEntry(false);
     $("td.selected .number").html(number == 0 ? "" : number);
     $("td.selected .m").html("");
+    $("td.selected .c").html("");
 }
 
-function markButtonClicked(number) {
-    addUndoEntry(false);
-    
+function markButtonClicked(number) {   
     if (number == 0) {
         $(".markbutton.selected").removeClass("selected");
     } else {
@@ -228,6 +244,8 @@ function markButtonClicked(number) {
     if ($("td.selected").length == 0) {
         return;
     }
+
+    addUndoEntry(false);
 
     let marks = "";
 
@@ -241,6 +259,33 @@ function markButtonClicked(number) {
     }
 
     $("td.selected").find(".m").html(marks);
+}
+
+function centerButtonClicked(number) {   
+    if (number == 0) {
+        $(".centerbutton.selected").removeClass("selected");
+    } else {
+        $("#centerbutton" + number).toggleClass("selected");
+    }
+
+    if ($("td.selected").length == 0) {
+        return;
+    }
+
+    addUndoEntry(false);
+
+    let marks = "";
+
+    for (let i = 1; i < 10; i++) {
+        if ($("#centerbutton" + i).hasClass("selected")) {
+            if (marks.length > 0) {
+                marks += " ";
+            }
+            marks += i;
+        }
+    }
+
+    $("td.selected").find(".c").html(marks);
 }
 
 function cellClicked(r, c) {
