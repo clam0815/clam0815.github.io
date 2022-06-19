@@ -81,30 +81,30 @@ function resetGame() {
     let counter = 0;
     $("#board").empty();
     for (let r=1; r < 10; r++) {
-        const tr = document.createElement("tr");
-        $(tr).attr("class", "R" + r);
+        const row = document.createElement("div");
+        $(row).attr("class", "row R" + r);
         for (let c=1; c < 10; c++) {
-            const td = document.createElement("td");
-            $(td).attr("id", "C" + r + c);
-            $(td).attr("class", "C" + c);
+            const cell = document.createElement("div");
+            $(cell).attr("id", "C" + r + c);
+            $(cell).attr("class", "cell C" + c);
             const div = document.createElement("div");
             $(div).addClass("number");
-            $(td).append(div);
+            $(cell).append(div);
             if (puzzle[counter] != "0") {
                 $(div).append(puzzle[counter]);
-                $(td).addClass("fix");
+                $(cell).addClass("fix");
             }
             const divM = document.createElement("div");
             $(divM).addClass("m");
-            $(td).append(divM);
+            $(cell).append(divM);
             const divC = document.createElement("div");
             $(divC).addClass("c");
-            $(td).append(divC);
+            $(cell).append(divC);
             counter++;
-            $(td).attr("onclick", "cellClicked(" + r + "," + c +")");
-            $(tr).append(td);            
+            $(cell).attr("onclick", "cellClicked(" + r + "," + c +")");
+            $(row).append(cell);            
         }
-        $("#board").append(tr);
+        $("#board").append(row);
     }
     undoStack = [];
     redoStack = [];
@@ -161,17 +161,17 @@ function check() {
 }
 
 function cellIsNull(r, c) {
-    const cell = $('.R' + r).find(".C" + c);
+    const cell = $("#board").find('.R' + r).find(".C" + c);
     const value = $(cell).find(".number").html();
     return value.length < 1;
 }
 
 function checkCell(numbers, r, c) {
-    const cell = $('.R' + r).find(".C" + c);
+    const cell = $("#board").find('.R' + r).find(".C" + c);
     const value = $(cell).find(".number").html();
     if (value.length > 0) {
         if (numbers.indexOf(value) >= 0) {
-            $('.R' + r).find(".C" + c).removeClass("selected").addClass("error");
+            $("#board").find('.R' + r).find(".C" + c).removeClass("selected").addClass("error");
             showInfo("Doppelte Zahl " + value + " an Stelle " + r + " / " + c);
             return false;
         }
@@ -224,14 +224,14 @@ function redo() {
 // todos:
 //  1 - 9 small numbers in the cell
 function buttonClicked(number) {
-    if ($("td.selected").length == 0) {
+    if ($(".cell.selected").length == 0) {
         return;
     }
 
     addUndoEntry(false);
-    $("td.selected .number").html(number == 0 ? "" : number);
-    $("td.selected .m").html("");
-    $("td.selected .c").html("");
+    $(".cell.selected .number").html(number == 0 ? "" : number);
+    $(".cell.selected .m").html("");
+    $(".cell.selected .c").html("");
 }
 
 function markButtonClicked(number) {   
@@ -241,7 +241,7 @@ function markButtonClicked(number) {
         $("#markbutton" + number).toggleClass("selected");
     }
 
-    if ($("td.selected").length == 0) {
+    if ($(".cell.selected").length == 0) {
         return;
     }
 
@@ -251,14 +251,11 @@ function markButtonClicked(number) {
 
     for (let i = 1; i < 10; i++) {
         if ($("#markbutton" + i).hasClass("selected")) {
-            if (marks.length > 0) {
-                marks += " ";
-            }
             marks += i;
         }
     }
 
-    $("td.selected").find(".m").html(marks);
+    $(".cell.selected").find(".m").html(marks);
 }
 
 function centerButtonClicked(number) {   
@@ -268,7 +265,7 @@ function centerButtonClicked(number) {
         $("#centerbutton" + number).toggleClass("selected");
     }
 
-    if ($("td.selected").length == 0) {
+    if ($(".cell.selected").length == 0) {
         return;
     }
 
@@ -278,14 +275,11 @@ function centerButtonClicked(number) {
 
     for (let i = 1; i < 10; i++) {
         if ($("#centerbutton" + i).hasClass("selected")) {
-            if (marks.length > 0) {
-                marks += " ";
-            }
             marks += i;
         }
     }
 
-    $("td.selected").find(".c").html(marks);
+    $(".cell.selected").find(".c").html("<span>" + marks + "</span>");
 }
 
 function cellClicked(r, c) {
@@ -298,7 +292,7 @@ function cellClicked(r, c) {
     }
 
     if (!multiple) {
-        $(".selected").removeClass("selected");
+        $(".cell.selected").removeClass("selected");
     }    
 
     if (!$(cell).hasClass("fix")) {
