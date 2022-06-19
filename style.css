@@ -65,16 +65,15 @@ button {
 	border-radius: 3px;
 	border: 0;
 	color: #fff;
+	padding: 5px;
 }
 
 .actionbutton {
 	background-color: #9100be;
-	padding: 5px;
 }
 
 .switchbutton {
 	background-color: #019f4b;
-	padding: 5px;
 }
 
 .actionbutton.unselected, .switchbutton.unselected {
@@ -83,6 +82,12 @@ button {
 
 .actionbutton.disabled {
 	background-color: #999;
+}
+
+button.small {
+	padding: 2px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 .numberbutton {
@@ -148,7 +153,7 @@ button {
 
 #controls {
 	background-color: #ddd;
-	border-radius: 3px;
+	border-radius: 8px;
 	max-width: 320px;
 	margin-left: auto;
 	margin-right: auto;
@@ -159,6 +164,8 @@ button {
 	margin-bottom: 20px;
 	padding: 2px;
 	background-color: #aaa;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
 }
 
 #specialbuttons {

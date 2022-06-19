@@ -53,7 +53,6 @@
 	<div style="margin-bottom: 5px">
 		<button class="actionbutton" onclick="newGame()">Neues Puzzle</button>
 		<button class="actionbutton" onclick="resetGame()">Zurücksetzen</button>
-		<button class="actionbutton" onclick="check()">Check</button>
 	</div>
 	<button class="switchbutton unselected" id="toggle">Bildschirm dauerhaft an</button>
 	<button class="switchbutton left unselected" id="easy" onclick="level(true)">leicht</button><button id="hard" class="switchbutton right" onclick="level(false)">schwer</button>
@@ -94,9 +93,10 @@
 			<button class="markbutton" onclick="markButtonClicked(0)">&nbsp;</button>
 		</div>
 		<div id="specialbuttons">
-			<button class="switchbutton unselected" id="multiple" onclick="$('#multiple').toggleClass('unselected')">Mehrfachauswahl</button>
-			<button class="actionbutton disabled" id="undobutton" onclick="undo()">Rückgängig</button>
-			<button class="actionbutton disabled" id="redobutton" onclick="redo()">Nochmal</button>
+			<button class="small switchbutton unselected" id="multiple" onclick="$('#multiple').toggleClass('unselected')"><img src="multi.png" /></button>
+			<button class="small actionbutton disabled" id="undobutton" onclick="undo()"><img src="undo.png" /></button>
+			<button class="small actionbutton disabled" id="redobutton" onclick="redo()"><img src="redo.png" /></button>
+			<button class="small actionbutton" onclick="check()"><img src="check.png" /></button>
 		</div>
 	</div>
 

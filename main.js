@@ -206,11 +206,14 @@ function redo() {
 
 // todos:
 //  1 - 9 small numbers in the cell
-//  background color for cells
-//  undo
 function buttonClicked(number) {
+    if ($("td.selected").length == 0) {
+        return;
+    }
+
     addUndoEntry(false);
     $("td.selected .number").html(number == 0 ? "" : number);
+    $("td.selected .m").html("");
 }
 
 function markButtonClicked(number) {

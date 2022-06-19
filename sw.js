@@ -33,6 +33,10 @@ self.addEventListener("install", event => {
 				"favicon-32x32.png", // Favicon, Safari on Mac OS
 				"index.html", // Main HTML file
 				"logo.png", // Logo
+				"undo.png", // icon
+				"redo.png", // icon
+				"check.png", // icon
+				"multi.png", // icon
 				"main.js", // Main Javascript file
 				"jquery.js", // JQuery library file
 				"nosleep.js", // nosleep library file
