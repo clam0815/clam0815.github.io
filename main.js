@@ -298,13 +298,21 @@ function cellClicked(r, c) {
     if (!$(cell).hasClass("fix")) {
         $(cell).addClass("selected");
         const marks = $(cell).find(".m").html();
+        $(".markbutton").removeClass("selected");
         for (let i = 1; i < 10; i++) {
             if (marks.indexOf(i.toString()) > -1) {
                 $("#markbutton" + i).addClass("selected");
             }
         }
-    }
-    
+
+        const center = $(cell).find(".c").html();
+        $(".centerbutton").removeClass("selected");
+        for (let i = 1; i < 10; i++) {
+            if (center.indexOf(i.toString()) > -1) {
+                $("#centerbutton" + i).addClass("selected");
+            }
+        }
+    }    
 }
 
 function showInfo(text) {
