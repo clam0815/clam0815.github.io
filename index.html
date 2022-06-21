@@ -49,12 +49,15 @@
  </head>
 
  <body>
-	<div style="margin-bottom: 5px">
-		<button class="actionbutton" onclick="newGame()">Neues Puzzle</button>
-		<button class="actionbutton" onclick="resetGame()">Zurücksetzen</button>
+	<div class="topbuttons">
+		<button class="switchbutton unselected" id="toggle">Bildschirm dauerhaft an</button>
+		<button class="switchbutton left unselected" id="easy" onclick="level(true)">leicht</button><button id="hard" class="switchbutton right" onclick="level(false)">schwer</button>
+
+		<div style="margin-top: 5px">
+			<button class="actionbutton" onclick="newGame()">Neues Puzzle</button>
+			<button class="actionbutton" onclick="resetGame()">Zurücksetzen</button>
+		</div>
 	</div>
-	<button class="switchbutton unselected" id="toggle">Bildschirm dauerhaft an</button>
-	<button class="switchbutton left unselected" id="easy" onclick="level(true)">leicht</button><button id="hard" class="switchbutton right" onclick="level(false)">schwer</button>
 
 	<div id="board"></div>
 
@@ -110,6 +113,9 @@
 	</div>
 
 	<div id="infomessage" style="display: none">
+		<div id="infomessageheader">
+			<a onclick="$('#infomessage').hide()">✕</a>
+		</div>
 		<div id="infotext"></div>
 		<button class="actionbutton" onclick="$('#infomessage').hide()">Schließen</button>
 	</div>

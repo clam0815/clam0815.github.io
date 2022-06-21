@@ -9,10 +9,6 @@ html, body {
 	text-align: center;
 }
 
-body {
-	padding-top: 5px;
-}
-
 #board {
 	margin-top: 20px;
 	margin-bottom: 15px;
@@ -38,8 +34,56 @@ body {
 	margin-bottom: -1px;
 }
 
+.m {
+	position: absolute;
+	font-size: 11px;
+	top: 1px;
+	left: 2px;
+	bottom: 1px;
+	right: 1px;
+	word-break: break-all;
+	text-align: left;
+}
+
+.c {
+	position: absolute;
+	top: 1px;
+	left: 1px;
+	bottom: 1px;
+	right: 1px;
+	line-height: 32px;
+	font-size: 11px;
+	text-align: center;
+	word-break: break-all;
+}
+
+.c span {
+	display: inline-block;
+  	line-height: normal;
+}
+
+@media only screen and (min-width: 800px) {
+	.cell {
+		width: 50px;
+		height: 50px;
+		font-size: 25px;
+	}
+
+	.cell .number {
+		padding-top: 6px !important;
+	}
+
+	.c {
+		font-size: 15px;
+		line-height: 50px !important;
+	}
+
+	.m {
+		font-size: 15px;
+	}
+}
+
 .cell .number {
-	height: 34px;
 	padding-top: 2px;
 }
 
@@ -89,11 +133,12 @@ button {
 }
 
 .switchbutton {
-	background-color: #019f4b;
+	background-color: #00871b;
 }
 
 .actionbutton.unselected, .switchbutton.unselected {
 	background-color: #555;
+	color: #fff;
 }
 
 .actionbutton.disabled {
@@ -106,23 +151,22 @@ button.small {
 	margin-right: 5px;
 }
 
-.numberbutton {
+.numberbutton, .markbutton, .centerbutton {
 	width: 40px;
 	height: 40px;
-	background-color: #4c00ff;
+	padding: 0;
+	background-color: #00a4ff;
 	margin: 1px;
+}
+
+.numberbutton {
 	font-size: 15px;
 }
 
 .markbutton {
-	width: 40px;
-	height: 40px;
-	background-color: #00a4ff;
-	padding: 0;
 	font-size: 80%;
 	padding-bottom: 12px;
     padding-right: 20px;
-	margin: 1px;
 }
 
 .markbutton.selected {
@@ -130,64 +174,42 @@ button.small {
 }
 
 .centerbutton {
-	width: 40px;
-	height: 40px;
-	background-color: #00a4ff;
-	padding: 0;
 	font-size: 80%;
-	margin: 1px;
 }
 
 .centerbutton.selected {
 	background-color: #999;
 }
 
-.m {
-	position: absolute;
-	width: 32px;
-	font-size: 11px;
-	top: 1px;
-	left: 1px;
-	word-break: break-all;
-	text-align: left;
-}
-
-.c {
-	position: absolute;
-	top: 1px;
-	left: 1px;
-	height: 32px;
-	width: 32px;
-	line-height: 32px;
-	font-size: 11px;
-	text-align: center;
-	word-break: break-all;
-}
-
-.c span {
-	display: inline-block;
-  	vertical-align: middle;
-  	line-height: normal;
-}
-
 #infomessage {
 	position: fixed;
 	top: 100px;
 	left: 50%;
-	width: 200px;
-	background-color: #00a4ff;
+	width: 250px;
+	background-color: #777;
 	color: #fff;
-	border: 2px solid #555;
 	border-radius: 3px;
 	margin-left: -110px;
-	padding: 10px;
+	padding-bottom: 10px;
 }
 
 #infomessage button {
 	margin-top: 20px;
 }
 
+#infomessageheader {
+	background-color: #4a4a4a;
+	text-align: right;
+	padding: 5px;
+	margin-bottom: 15px;
+}
+
+a {
+	cursor: pointer;
+}
+
 .switchbutton.left {
+	border-left-color: #00871b;
 	margin-right: 0px;
 	border-right: 0px;
 	border-top-right-radius: 0;
@@ -213,8 +235,8 @@ button.small {
 
 #controls {
 	background-color: #ddd;
-	border-radius: 8px;
-	max-width: 320px;
+	border-radius: 6px;
+	width: 300px;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
@@ -224,7 +246,21 @@ button.small {
 	margin-bottom: 20px;
 }
 
+#controlbuttons button {
+	width: 100px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
 #specialbuttons {
 	margin-top: 10px;
 	padding: 10px;
+}
+
+button img {
+	vertical-align: middle;
+}
+
+.topbuttons {
+	padding: 5px;
 }
