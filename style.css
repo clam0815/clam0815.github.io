@@ -113,8 +113,21 @@ html, body {
 	color: #000;
 }
 
-.cell.selected {
-	background-color: #ff0;	
+.border {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border: 2px solid #005abe;
+}
+
+.cell .border {
+	display: none;
+}
+
+.cell.selected .border {
+	display: inline-block;
 }
 
 .cell.error {
@@ -151,12 +164,35 @@ button.small {
 	margin-right: 5px;
 }
 
-.numberbutton, .markbutton, .centerbutton {
+.numberbutton, .markbutton, .centerbutton, .colorbutton {
 	width: 40px;
 	height: 40px;
 	padding: 0;
-	background-color: #00a4ff;
 	margin: 1px;
+}
+
+.numberbutton, .markbutton, .centerbutton {
+	background-color: #00a4ff;
+}
+
+.blue {
+	background-color: #5cc2f9;
+}
+
+.red {
+	background-color: #fe8080;
+}
+
+.green {
+	background-color: #a6fe80;
+}
+
+.yellow {
+	background-color: #f8fe80;
+}
+
+.grey {
+	background-color: #b3b3b3;
 }
 
 .numberbutton {
@@ -247,7 +283,7 @@ a {
 }
 
 #controlbuttons button {
-	width: 100px;
+	width: 75px;
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
@@ -263,4 +299,8 @@ button img {
 
 .topbuttons {
 	padding: 5px;
+}
+
+.highlighted {
+	background-color: #f6b44e;
 }

@@ -63,7 +63,7 @@
 
 	<div id="controls">
 		<div id="controlbuttons">
-			<button id="numbers" class="switchbutton left" onclick="mode(1)">Zahlen</button><button id="mark" class="switchbutton middle unselected" onclick="mode(2)">Außen</button><button id="center" class="switchbutton right unselected" onclick="mode(3)">Innen</button>
+			<button id="numbers" class="switchbutton left" onclick="mode(1)">Zahlen</button><button id="mark" class="switchbutton middle unselected" onclick="mode(2)">Außen</button><button id="center" class="switchbutton middle unselected" onclick="mode(3)">Innen</button><button id="color" class="switchbutton right unselected" onclick="mode(4)">Farben</button>
 		</div>
 		<div id="numberbuttons">
 			<button class="numberbutton" onclick="buttonClicked(1)">1</button>
@@ -104,7 +104,15 @@
 			<button class="centerbutton" id="centerbutton9" onclick="centerButtonClicked(9)">9</button>
 			<button class="centerbutton" onclick="centerButtonClicked(0)">&nbsp;</button>
 		</div>
+		<div id="colorbuttons" style="display: none">
+			<button class="colorbutton blue" id="colorbutton1" onclick="colorButtonClicked('blue')"></button>
+			<button class="colorbutton red" id="colorbutton2" onclick="colorButtonClicked('red')"></button>
+			<button class="colorbutton green" id="colorbutton3" onclick="colorButtonClicked('green')"></button>
+			<button class="colorbutton yellow" id="colorbutton3" onclick="colorButtonClicked('yellow')"></button>
+			<button class="colorbutton grey" id="colorbutton3" onclick="colorButtonClicked('grey')"></button>
+		</div>
 		<div id="specialbuttons">
+			<button class="small switchbutton unselected" id="highlight" onclick="$('#highlight').toggleClass('unselected'); highlight(0);"><img src="highlight.png" /></button>
 			<button class="small switchbutton unselected" id="multiple" onclick="$('#multiple').toggleClass('unselected')"><img src="multi.png" /></button>
 			<button class="small actionbutton disabled" id="undobutton" onclick="undo()"><img src="undo.png" /></button>
 			<button class="small actionbutton disabled" id="redobutton" onclick="redo()"><img src="redo.png" /></button>

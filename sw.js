@@ -37,6 +37,7 @@ self.addEventListener("install", event => {
 				"redo.png", // icon
 				"check.png", // icon
 				"multi.png", // icon
+				"highlight.png", // icon
 				"main.js", // Main Javascript file
 				"jquery.js", // JQuery library file
 				"nosleep.js", // nosleep library file
