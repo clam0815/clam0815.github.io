@@ -117,14 +117,26 @@ function resetGame() {
             //$(cell).attr("onclick", "cellClicked(" + r + "," + c +")");
             $(row).append(cell);
             
+            // $(cell).click(function(e) {
+            //     cellClicked(e, r, c);
+            // });
+        }
+        $("#board").append(row);
+    }
+    initCellClickHandlers()
+    undoStack = [];
+    redoStack = [];
+}
+
+function initCellClickHandlers() {
+    for (let r=1; r < 10; r++) {
+        for (let c=1; c < 10; c++) {
+            const cell = $("#board").find('.R' + r).find(".C" + c);
             $(cell).click(function(e) {
                 cellClicked(e, r, c);
             });
         }
-        $("#board").append(row);
     }
-    undoStack = [];
-    redoStack = [];
 }
 
 function check() {
@@ -216,6 +228,7 @@ function getState() {
 
 function setState(s) {
     $("#board").html(s);
+    initCellClickHandlers();
 }
 
 function undo() {
@@ -244,14 +257,17 @@ function buttonClicked(number) {
         return;
     }
 
-    if ($(".cell.selected").length == 0) {
+    if ($(".cell.selected").not(".fix").length == 0) {
         return;
     }
-
+    
     addUndoEntry(false);
-    $(".cell.selected .number").html(number == 0 ? "" : number);
-    $(".cell.selected .m").html("");
-    $(".cell.selected .c").html("");
+
+    $(".cell.selected").not(".fix").each(function(){
+        $(this).find(".number").html(number == 0 ? "" : number);
+        $(this).find(".m").html("");
+        $(this).find(".c").html("");
+    });
 }
 
 function markButtonClicked(number) {  
@@ -280,7 +296,7 @@ function markButtonClicked(number) {
         }
     }
 
-    $(".cell.selected").find(".m").html(marks);
+    $(".cell.selected").not(".fix").find(".m").html(marks);
 }
 
 function centerButtonClicked(number) {   
@@ -309,7 +325,7 @@ function centerButtonClicked(number) {
         }
     }
 
-    $(".cell.selected").find(".c").html("<span>" + marks + "</span>");
+    $(".cell.selected").not(".fix").find(".c").html("<span>" + marks + "</span>");
 }
 
 function colorButtonClicked(cssClass) {
@@ -389,13 +405,65 @@ function numberKeyClicked(number) {
     }
 }
 
-$(document).keypress(function(event) {
-    switch (event.charCode) {
-        case 25:
+function move(direction)
+{
+    if ($(".cell.selected").length != 1) {
+        return;
+    }
+
+    const cell =  $(".cell.selected").first();
+
+    const r = $(cell).closest(".row").index();
+    const c = $(cell).index();
+
+    if (direction == 1) { //up
+        if (r > 0) {
+            $(cell).removeClass("selected");
+            $('.R' + r).find(".C" + (c + 1)).addClass("selected");
+        }
+    }
+
+    if (direction == 2) { //down
+        if (r < 8) {
+            $(cell).removeClass("selected");
+            $('.R' + (r + 2)).find(".C" + (c + 1)).addClass("selected");
+        }
+    }
+
+    if (direction == 3) { //left
+        if (c > 0) {
+            $(cell).removeClass("selected");
+            $('.R' + (r + 1)).find(".C" + (c)).addClass("selected");
+        }
+    }
+
+    if (direction == 4) { //right
+        if (c < 8) {
+            $(cell).removeClass("selected");
+            $('.R' + (r + 1)).find(".C" + (c + 2)).addClass("selected");
+        }
+    }
+}
+
+$(document).keyup(function(event) {
+    switch (event.keyCode) {
+        case 87:
             redo();
             break;
-        case 26:
+        case 82:
             undo();
+            break;
+        case 37:
+            move(3);
+            break;
+        case 38:
+            move(1);
+            break;
+        case 39:
+            move(4);
+            break;
+        case 40:
+            move(2);
             break;
         case 48:
             numberKeyClicked(0);
@@ -427,16 +495,16 @@ $(document).keypress(function(event) {
         case 57:
             numberKeyClicked(9);
             break;
-        case 122:
+        case 90:
             mode(1);
             break;
-        case 97:
+        case 65:
             mode(2);
             break;
-        case 102:
+        case 70:
             mode(4);
             break;
-        case 105:
+        case 73:
             mode(3);
             break;
         case 109:
@@ -454,6 +522,6 @@ $(document).keypress(function(event) {
             }
             break;
         default:
-            alert('Handler for .keypress() called. - ' + event.charCode);
+            //alert('Handler for .keyup() called. - ' + event.keyCode);
     }
 });
