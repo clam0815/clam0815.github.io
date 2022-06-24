@@ -23,6 +23,8 @@ toggleEl[0].addEventListener('click', function() {
     }
 }, false);
 
+newGame();
+
 function level(easy) {
     if (easy) {
         $("#easy").removeClass("unselected");
@@ -38,45 +40,31 @@ function level(easy) {
 }
 
 function mode(v) {
+    $('#numberbuttons').hide();
+    $('#markbuttons').hide();
+    $('#centerbuttons').hide();
+    $('#colorbuttons').hide();
+    
+    $('#numbers').addClass("unselected");
+    $('#mark').addClass("unselected");
+    $('#center').addClass("unselected");
+    $('#color').addClass("unselected");
+
     switch (v) {
         case 1:
             $('#numberbuttons').show();
-            $('#markbuttons').hide();
-            $('#centerbuttons').hide();
-            $('#colorbuttons').hide();
             $('#numbers').removeClass("unselected");
-            $('#mark').addClass("unselected");
-            $('#center').addClass("unselected");
-            $('#color').addClass("unselected");
             break;
         case 2:
-            $('#numberbuttons').hide();
             $('#markbuttons').show();
-            $('#centerbuttons').hide();
-            $('#colorbuttons').hide();
-            $('#numbers').addClass("unselected");
             $('#mark').removeClass("unselected");
-            $('#center').addClass("unselected");
-            $('#color').addClass("unselected");
             break;
         case 3:
-            $('#numberbuttons').hide();
-            $('#markbuttons').hide();
             $('#centerbuttons').show();
-            $('#colorbuttons').hide();
-            $('#numbers').addClass("unselected");
-            $('#mark').addClass("unselected");
             $('#center').removeClass("unselected");
-            $('#color').addClass("unselected");
             break;
         case 4:
             $('#colorbuttons').show();
-            $('#numberbuttons').hide();
-            $('#markbuttons').hide();
-            $('#centerbuttons').hide();
-            $('#numbers').addClass("unselected");
-            $('#mark').addClass("unselected");
-            $('#center').addClass("unselected");
             $('#color').removeClass("unselected");
     }
 }
@@ -95,8 +83,7 @@ function resetGame() {
         $(row).attr("class", "row R" + r);
         for (let c=1; c < 10; c++) {
             const cell = document.createElement("div");
-            $(cell).attr("id", "C" + r + c);
-            $(cell).attr("class", "cell C" + c);
+            $(cell).attr("id", "C" + r + c).attr("class", "cell C" + c);
             const div = document.createElement("div");
             $(div).addClass("number");
             $(cell).append(div);
@@ -104,17 +91,11 @@ function resetGame() {
                 $(div).append(puzzle[counter]);
                 $(cell).addClass("fix");
             }
-            const divM = document.createElement("div");
-            $(divM).addClass("m");
-            $(cell).append(divM);
-            const divC = document.createElement("div");
-            $(divC).addClass("c");
-            $(cell).append(divC);
-            const divB = document.createElement("div");
-            $(divB).addClass("border");
-            $(cell).append(divB);
-            counter++;
+            $(cell).append("<div class='m'></div");
+            $(cell).append("<div class='c'></div");
+            $(cell).append("<div class='border'></div");
             $(row).append(cell);
+            counter++;
         }
         $("#board").append(row);
     }
@@ -126,7 +107,7 @@ function resetGame() {
 function initCellClickHandlers() {
     for (let r=1; r < 10; r++) {
         for (let c=1; c < 10; c++) {
-            const cell = $("#board").find('.R' + r).find(".C" + c);
+            const cell = $("#C" + r + "" + c);
             $(cell).click(function(e) {
                 cellClicked(e, r, c);
             });
@@ -185,13 +166,13 @@ function check() {
 }
 
 function cellIsNull(r, c) {
-    const cell = $("#board").find('.R' + r).find(".C" + c);
+    const cell = $("#C" + r + "" + c);
     const value = $(cell).find(".number").html();
     return value.length < 1;
 }
 
 function checkCell(numbers, r, c) {
-    const cell = $("#board").find('.R' + r).find(".C" + c);
+    const cell = $("#C" + r + "" + c);
     const value = $(cell).find(".number").html();
     if (value.length > 0) {
         if (numbers.indexOf(value) >= 0) {
@@ -204,12 +185,9 @@ function checkCell(numbers, r, c) {
     return true;
 }
 
-function addUndoEntry(fromRedo) {
+function addUndoEntry() {
     undoStack.push(getState());
     $("#undobutton").removeClass("disabled");
-    if (!fromRedo) {
-
-    }
 }
 
 function addRedoEntry() {
@@ -238,7 +216,7 @@ function undo() {
 
 function redo() {
     if (redoStack.length > 0) {
-        addUndoEntry(true);
+        addUndoEntry();
         setState(redoStack.pop());
     }
     if (redoStack.length == 0) {
@@ -256,7 +234,7 @@ function buttonClicked(number) {
         return;
     }
     
-    addUndoEntry(false);
+    addUndoEntry();
 
     $(".cell.selected").not(".fix").each(function(){
         $(this).find(".number").html(number == 0 ? "" : number);
@@ -281,7 +259,7 @@ function markButtonClicked(number) {
         return;
     }
 
-    addUndoEntry(false);
+    addUndoEntry();
 
     let marks = "";
 
@@ -310,7 +288,7 @@ function centerButtonClicked(number) {
         return;
     }
 
-    addUndoEntry(false);
+    addUndoEntry();
 
     let marks = "";
 
@@ -328,13 +306,16 @@ function colorButtonClicked(cssClass) {
         return;
     }
 
-    addUndoEntry(false);
-    $(".cell.selected").removeClass("red green blue");
+    addUndoEntry();
+    $(".cell.selected").removeClass("red green blue yellow grey");
     $(".cell.selected").addClass(cssClass);
+
+    $('.colorbutton').removeClass("selected");
+    $('.colorbutton.' + cssClass).addClass("selected");
 }
 
 function cellClicked(e, r, c) {
-    const cell = $('.R' + r).find(".C" + c);
+    const cell = $("#C" + r + "" + c);
     const multiple = e.ctrlKey || !$("#multiple").hasClass("unselected");
 
     if ($(cell).hasClass("selected")) {
@@ -353,22 +334,46 @@ function cellClicked(e, r, c) {
 
     if (!$(cell).hasClass("fix")) {
         $(cell).addClass("selected");
-        const marks = $(cell).find(".m").html();
-        $(".markbutton").removeClass("selected");
-        for (let i = 1; i < 10; i++) {
-            if (marks.indexOf(i.toString()) > -1) {
-                $("#markbutton" + i).addClass("selected");
-            }
-        }
+        initMarks(cell);
+    }  
+}
 
-        const center = $(cell).find(".c").html();
-        $(".centerbutton").removeClass("selected");
-        for (let i = 1; i < 10; i++) {
-            if (center.indexOf(i.toString()) > -1) {
-                $("#centerbutton" + i).addClass("selected");
-            }
+function initMarks(cell) {  
+    $(".markbutton").removeClass("selected");
+    $(".centerbutton").removeClass("selected");
+    $(".colorbutton").removeClass("selected");
+
+    if (cell == null) return;
+
+    const marks = $(cell).find(".m").html();
+    for (let i = 1; i < 10; i++) {
+        if (marks.indexOf(i.toString()) > -1) {
+            $("#markbutton" + i).addClass("selected");
         }
-    }    
+    }
+
+    const center = $(cell).find(".c").html();
+    for (let i = 1; i < 10; i++) {
+        if (center.indexOf(i.toString()) > -1) {
+            $("#centerbutton" + i).addClass("selected");
+        }
+    }
+
+    if ($(cell).hasClass("red")) {
+        $(".colorbutton.red").addClass("selected");
+    }
+    if ($(cell).hasClass("green")) {
+        $(".colorbutton.green").addClass("selected");
+    }
+    if ($(cell).hasClass("blue")) {
+        $(".colorbutton.blue").addClass("selected");
+    }
+    if ($(cell).hasClass("yellow")) {
+        $(".colorbutton.yellow").addClass("selected");
+    }
+    if ($(cell).hasClass("grey")) {
+        $(".colorbutton.grey").addClass("selected");
+    }
 }
 
 function highlight(number) {
@@ -386,16 +391,14 @@ function showInfo(text) {
     $('#infomessage').show();
 }
 
-newGame();
-
 function numberKeyClicked(number) {
-    if ($('#center').hasClass("unselected") && $('#mark').hasClass("unselected") && $('#color').hasClass("unselected")) {
+    if (!$('#numbers').hasClass("unselected")) {
         buttonClicked(number);
     }
-    if ($('#numbers').hasClass("unselected") && $('#mark').hasClass("unselected") && $('#color').hasClass("unselected")) {
+    if (!$('#center').hasClass("unselected")) {
         centerButtonClicked(number);
     }
-    if ($('#numbers').hasClass("unselected") && $('#center').hasClass("unselected") && $('#color').hasClass("unselected")) {
+    if (!$('#mark').hasClass("unselected")) {
         markButtonClicked(number);
     }
 }
@@ -411,33 +414,38 @@ function move(direction)
     const r = $(cell).closest(".row").index();
     const c = $(cell).index();
 
+    let newCell = null;
+
     if (direction == 1) { //up
         if (r > 0) {
-            $(cell).removeClass("selected");
-            $('.R' + r).find(".C" + (c + 1)).addClass("selected");
+            newCell = $('.R' + r).find(".C" + (c + 1))            
         }
     }
 
     if (direction == 2) { //down
         if (r < 8) {
-            $(cell).removeClass("selected");
-            $('.R' + (r + 2)).find(".C" + (c + 1)).addClass("selected");
+            newCell = $('.R' + (r + 2)).find(".C" + (c + 1));
         }
     }
 
     if (direction == 3) { //left
         if (c > 0) {
-            $(cell).removeClass("selected");
-            $('.R' + (r + 1)).find(".C" + (c)).addClass("selected");
+            newCell = $('.R' + (r + 1)).find(".C" + (c));
         }
     }
 
     if (direction == 4) { //right
         if (c < 8) {
-            $(cell).removeClass("selected");
-            $('.R' + (r + 1)).find(".C" + (c + 2)).addClass("selected");
+            newCell = $('.R' + (r + 1)).find(".C" + (c + 2));
         }
     }
+
+    if (newCell != null) {
+        $(cell).removeClass("selected");
+        newCell.addClass("selected");
+    }
+
+    initMarks(newCell);
 }
 
 $(document).keyup(function(event) {

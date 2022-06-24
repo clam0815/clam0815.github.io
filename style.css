@@ -175,6 +175,14 @@ button.small {
 	background-color: #00a4ff;
 }
 
+.colorbutton {
+	border: 2px solid transparent;
+}
+
+.colorbutton.selected {
+	border-color: #000;
+}
+
 .blue {
 	background-color: #5cc2f9;
 }
