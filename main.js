@@ -111,6 +111,9 @@ function initCellClickHandlers() {
             $(cell).click(function(e) {
                 cellClicked(e, r, c);
             });
+            $(cell).dblclick(function(e) {
+                cellDblClicked(e, r, c);
+            });
         }
     }
 }
@@ -251,6 +254,8 @@ function markButtonClicked(number) {
 
     if (number == 0) {
         $(".markbutton.selected").removeClass("selected");
+        $(".cell.selected").not(".fix").find(".m").html("");
+        return;
     } else {
         $("#markbutton" + number).toggleClass("selected");
     }
@@ -261,15 +266,21 @@ function markButtonClicked(number) {
 
     addUndoEntry();
 
-    let marks = "";
-
-    for (let i = 1; i < 10; i++) {
-        if ($("#markbutton" + i).hasClass("selected")) {
-            marks += i;
+    $(".cell.selected").not(".fix").each(function(){
+        let marks = $(this).find(".m").html();
+        if (marks.indexOf(number.toString()) == -1) {
+            marks += number.toString();
+        } else {
+            marks = marks.replaceAll(number.toString(), "");
         }
-    }
 
-    $(".cell.selected").not(".fix").find(".m").html(marks);
+        //sort alphabetically
+        if (marks.length > 0) {
+            marks = marks.split('').sort().join('');
+        }
+
+        $(this).find(".m").html(marks);
+    });
 }
 
 function centerButtonClicked(number) {   
@@ -280,6 +291,8 @@ function centerButtonClicked(number) {
 
     if (number == 0) {
         $(".centerbutton.selected").removeClass("selected");
+        $(".cell.selected").not(".fix").find(".c").html("");
+        return;
     } else {
         $("#centerbutton" + number).toggleClass("selected");
     }
@@ -290,15 +303,21 @@ function centerButtonClicked(number) {
 
     addUndoEntry();
 
-    let marks = "";
-
-    for (let i = 1; i < 10; i++) {
-        if ($("#centerbutton" + i).hasClass("selected")) {
-            marks += i;
+    $(".cell.selected").not(".fix").each(function(){
+        let marks = $(this).find(".c").html();
+        if (marks.indexOf(number.toString()) == -1) {
+            marks += number.toString();
+        } else {
+            marks = marks.replaceAll(number.toString(), "");
         }
-    }
 
-    $(".cell.selected").not(".fix").find(".c").html("<span>" + marks + "</span>");
+        //sort alphabetically
+        if (marks.length > 0) {
+            marks = marks.split('').sort().join('');
+        }
+
+        $(this).find(".c").html(marks);
+    });
 }
 
 function colorButtonClicked(cssClass) {
@@ -336,6 +355,14 @@ function cellClicked(e, r, c) {
         $(cell).addClass("selected");
         initMarks(cell);
     }  
+}
+
+function cellDblClicked(e, r, c) {
+    const cell = $("#C" + r + "" + c);
+    if ($(cell).find(".number").html().length == 1) {
+        const n = $(cell).find(".number").html();
+        highlight(n);
+    }
 }
 
 function initMarks(cell) {  
