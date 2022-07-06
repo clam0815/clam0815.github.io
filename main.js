@@ -23,7 +23,7 @@ toggleEl[0].addEventListener('click', function() {
     }
 }, false);
 
-newGame();
+loadLastState();
 
 function level(easy) {
     if (easy) {
@@ -189,7 +189,7 @@ function checkCell(numbers, r, c) {
 }
 
 function addUndoEntry() {
-    undoStack.push(getState());
+    undoStack.push( getState());    
     $("#undobutton").removeClass("disabled");
 }
 
@@ -205,6 +205,19 @@ function getState() {
 function setState(s) {
     $("#board").html(s);
     initCellClickHandlers();
+}
+
+function setLastState() {
+    localStorage.setItem('lastState', state);
+}
+
+function loadLastState() {
+    const state = localStorage.getItem('lastState');
+    if (state == null) {
+        newGame();
+    } else {
+        setState(state);
+    }
 }
 
 function undo() {
@@ -244,6 +257,8 @@ function buttonClicked(number) {
         $(this).find(".m").html("");
         $(this).find(".c").html("");
     });
+
+    setLastState();
 }
 
 function markButtonClicked(number) {  
@@ -281,6 +296,8 @@ function markButtonClicked(number) {
 
         $(this).find(".m").html(marks);
     });
+
+    setLastState();
 }
 
 function centerButtonClicked(number) {   
@@ -318,6 +335,8 @@ function centerButtonClicked(number) {
 
         $(this).find(".c").html(marks);
     });
+
+    setLastState();
 }
 
 function colorButtonClicked(cssClass) {
@@ -326,11 +345,14 @@ function colorButtonClicked(cssClass) {
     }
 
     addUndoEntry();
+
     $(".cell.selected").removeClass("red green blue yellow grey");
     $(".cell.selected").addClass(cssClass);
 
     $('.colorbutton').removeClass("selected");
     $('.colorbutton.' + cssClass).addClass("selected");
+
+    setLastState();
 }
 
 function cellClicked(e, r, c) {
