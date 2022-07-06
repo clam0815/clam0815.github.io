@@ -189,7 +189,7 @@ function checkCell(numbers, r, c) {
 }
 
 function addUndoEntry() {
-    undoStack.push( getState());    
+    undoStack.push(getState());    
     $("#undobutton").removeClass("disabled");
 }
 
@@ -208,7 +208,7 @@ function setState(s) {
 }
 
 function setLastState() {
-    localStorage.setItem('lastState', state);
+    localStorage.setItem('lastState', getState());
 }
 
 function loadLastState() {
