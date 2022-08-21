@@ -45,16 +45,19 @@ html, body {
 	text-align: left;
 }
 
-.c {
+.co {
 	position: absolute;
-	top: 1px;
+	top: 0px;
 	left: 1px;
 	bottom: 1px;
 	right: 1px;
-	line-height: 32px;
+}
+
+.c {
 	font-size: 11px;
 	text-align: center;
 	word-break: break-all;
+	display: inline-block;
 }
 
 .c span {
@@ -75,7 +78,10 @@ html, body {
 
 	.c {
 		font-size: 15px;
-		line-height: 50px !important;
+	}
+
+	.co {
+		padding-top: 2px;
 	}
 
 	.m {

@@ -73,6 +73,7 @@ function mode(v) {
 function newGame() {
     let randomPuzzleIndex = Math.floor(Math.random() * (puzzles.length + 1));
     puzzle = puzzles[randomPuzzleIndex];
+    setLastPuzzle();
     resetGame();
 }
 
@@ -93,7 +94,7 @@ function resetGame() {
                 $(cell).addClass("fix");
             }
             $(cell).append("<div class='m'></div");
-            $(cell).append("<div class='c'></div");
+            $(cell).append("<div class='co'><div class='c'></div></div");
             $(cell).append("<div class='border'></div");
             $(row).append(cell);
             counter++;
@@ -208,16 +209,26 @@ function setState(s) {
     initCellClickHandlers();
 }
 
+function setLastPuzzle() {
+    localStorage.setItem('lastPuzzle', puzzle);
+}
+
+function getLastPuzzle() {
+    puzzle = localStorage.getItem('lastPuzzle');
+}
+
 function setLastState() {
-    localStorage.setItem('lastState', getState());
+    localStorage.setItem('lastPuzzleState', getState());
 }
 
 function loadLastState() {
-    const state = localStorage.getItem('lastState');
+    localStorage.removeItem('lastState'); // previous key
+    const state = localStorage.getItem('lastPuzzleState');
     if (state == null) {
         newGame();
     } else {
         setState(state);
+        getLastPuzzle();
     }
 }
 
